@@ -25,8 +25,8 @@ model Customer {
   qb_customer_id String?
   billing_address String?
   shipping_address String?
-  tax_exempt String?
-  balance Decimal?
+  tax_exempt Boolean?
+  balance Decimal? @db.Decimal(10, 2)
   created_at DateTime?
   updated_at DateTime?
 }
