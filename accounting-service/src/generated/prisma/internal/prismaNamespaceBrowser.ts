@@ -88,6 +88,8 @@ export const CustomerScalarFieldEnum = {
   tax_exempt: 'tax_exempt',
   balance: 'balance',
   qb_sync_token: 'qb_sync_token',
+  active: 'active',
+  deleted_at: 'deleted_at',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

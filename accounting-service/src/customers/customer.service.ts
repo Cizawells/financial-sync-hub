@@ -9,6 +9,7 @@ import { buildCustomerOrderBy } from './customer.sort.js';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CustomerCreatedEvent } from './events/customer-created.event.js';
 import { CustomerUpdatedEvent } from './events/customer-updated.event.js';
+import { CustomerDeletedEvent } from './events/customer-deleted.event.js';
 
 @Injectable()
 export class CustomerService {
@@ -105,9 +106,18 @@ export class CustomerService {
     return CustomerMapper.toResponseDto(customer);
   }
   async delete(id: string): Promise<CustomerResponseDto> {
-    const customer = await this.prismaService.customer.delete({
+    const customer = await this.prismaService.customer.update({
       where: { id },
+      data: {
+        active: false,
+        deleted_at: new Date(),
+      },
     });
+
+    this.eventEmitter.emit(
+      'customer.deleted',
+      new CustomerDeletedEvent(customer.id),
+    );
 
     return CustomerMapper.toResponseDto(customer);
   }

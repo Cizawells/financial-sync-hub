@@ -37,7 +37,6 @@ export class QuickBooksService {
   }> {
     const qb = this.getQBClient();
     const payload = QBCustomerMapper.toQuickBooks(customer);
-    console.log('creating payload', payload);
     return new Promise((resolve, reject) => {
       qb.createCustomer(payload, (err, result) => {
         if (err) return reject(err);
@@ -54,7 +53,6 @@ export class QuickBooksService {
   }> {
     const qb = this.getQBClient();
     const payload = QBCustomerMapper.toQuickBooks(customer);
-    console.log('updating payload', payload);
     return new Promise((resolve, reject) => {
       qb.updateCustomer(payload, (err, result) => {
         if (err) return reject(err);
@@ -63,6 +61,29 @@ export class QuickBooksService {
           SyncToken: result.SyncToken,
         }); // QB's ID for this customer
       });
+    });
+  }
+  async deleteCustomer(customer: Customer): Promise<{
+    Id: string;
+    SyncToken: string;
+  }> {
+    const qb = this.getQBClient();
+    // const payload = QBCustomerMapper.toQuickBooks(customer);
+    return new Promise((resolve, reject) => {
+      qb.updateCustomer(
+        {
+          Id: customer.qb_id,
+          SyncToken: customer.qb_sync_token,
+          Active: false,
+        },
+        (err, result) => {
+          if (err) return reject(err);
+          resolve({
+            Id: result.Id,
+            SyncToken: result.SyncToken,
+          }); // QB's ID for this customer
+        },
+      );
     });
   }
 }

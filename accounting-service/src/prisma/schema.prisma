@@ -30,6 +30,8 @@ model Customer {
   tax_exempt Boolean?
   balance Decimal? @db.Decimal(10, 2)
   qb_sync_token String?
+  active Boolean @default(true)
+  deleted_at DateTime?
   created_at DateTime?
   updated_at DateTime?
 

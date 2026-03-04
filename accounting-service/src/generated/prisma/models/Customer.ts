@@ -51,6 +51,8 @@ export type CustomerMinAggregateOutputType = {
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
   qb_sync_token: string | null
+  active: boolean | null
+  deleted_at: Date | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -72,6 +74,8 @@ export type CustomerMaxAggregateOutputType = {
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
   qb_sync_token: string | null
+  active: boolean | null
+  deleted_at: Date | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -93,6 +97,8 @@ export type CustomerCountAggregateOutputType = {
   tax_exempt: number
   balance: number
   qb_sync_token: number
+  active: number
+  deleted_at: number
   created_at: number
   updated_at: number
   _all: number
@@ -124,6 +130,8 @@ export type CustomerMinAggregateInputType = {
   tax_exempt?: true
   balance?: true
   qb_sync_token?: true
+  active?: true
+  deleted_at?: true
   created_at?: true
   updated_at?: true
 }
@@ -145,6 +153,8 @@ export type CustomerMaxAggregateInputType = {
   tax_exempt?: true
   balance?: true
   qb_sync_token?: true
+  active?: true
+  deleted_at?: true
   created_at?: true
   updated_at?: true
 }
@@ -166,6 +176,8 @@ export type CustomerCountAggregateInputType = {
   tax_exempt?: true
   balance?: true
   qb_sync_token?: true
+  active?: true
+  deleted_at?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -274,6 +286,8 @@ export type CustomerGroupByOutputType = {
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
   qb_sync_token: string | null
+  active: boolean
+  deleted_at: Date | null
   created_at: Date | null
   updated_at: Date | null
   _count: CustomerCountAggregateOutputType | null
@@ -318,6 +332,8 @@ export type CustomerWhereInput = {
   tax_exempt?: Prisma.BoolNullableFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.StringNullableFilter<"Customer"> | string | null
+  active?: Prisma.BoolFilter<"Customer"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
 }
@@ -339,6 +355,8 @@ export type CustomerOrderByWithRelationInput = {
   tax_exempt?: Prisma.SortOrderInput | Prisma.SortOrder
   balance?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
+  active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
 }
@@ -364,6 +382,8 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   tax_exempt?: Prisma.BoolNullableFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.StringNullableFilter<"Customer"> | string | null
+  active?: Prisma.BoolFilter<"Customer"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
 }, "id" | "email" | "created_at_id">
@@ -385,6 +405,8 @@ export type CustomerOrderByWithAggregationInput = {
   tax_exempt?: Prisma.SortOrderInput | Prisma.SortOrder
   balance?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
+  active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CustomerCountOrderByAggregateInput
@@ -414,6 +436,8 @@ export type CustomerScalarWhereWithAggregatesInput = {
   tax_exempt?: Prisma.BoolNullableWithAggregatesFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  active?: Prisma.BoolWithAggregatesFilter<"Customer"> | boolean
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
 }
@@ -435,6 +459,8 @@ export type CustomerCreateInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  active?: boolean
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
@@ -456,6 +482,8 @@ export type CustomerUncheckedCreateInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  active?: boolean
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
@@ -477,6 +505,8 @@ export type CustomerUpdateInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -498,6 +528,8 @@ export type CustomerUncheckedUpdateInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -519,6 +551,8 @@ export type CustomerCreateManyInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  active?: boolean
+  deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
@@ -540,6 +574,8 @@ export type CustomerUpdateManyMutationInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -561,6 +597,8 @@ export type CustomerUncheckedUpdateManyInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -587,6 +625,8 @@ export type CustomerCountOrderByAggregateInput = {
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -612,6 +652,8 @@ export type CustomerMaxOrderByAggregateInput = {
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -633,6 +675,8 @@ export type CustomerMinOrderByAggregateInput = {
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -661,6 +705,10 @@ export type NullableDecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
@@ -684,6 +732,8 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  active?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["customer"]>
@@ -705,6 +755,8 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  active?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["customer"]>
@@ -726,6 +778,8 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  active?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["customer"]>
@@ -747,11 +801,13 @@ export type CustomerSelectScalar = {
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  active?: boolean
+  deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "address" | "currency" | "payment_terms" | "qb_id" | "billing_address" | "shipping_address" | "city" | "country" | "phone" | "tax_exempt" | "balance" | "qb_sync_token" | "created_at" | "updated_at", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "address" | "currency" | "payment_terms" | "qb_id" | "billing_address" | "shipping_address" | "city" | "country" | "phone" | "tax_exempt" | "balance" | "qb_sync_token" | "active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["customer"]>
 
 export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Customer"
@@ -773,6 +829,8 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     tax_exempt: boolean | null
     balance: runtime.Decimal | null
     qb_sync_token: string | null
+    active: boolean
+    deleted_at: Date | null
     created_at: Date | null
     updated_at: Date | null
   }, ExtArgs["result"]["customer"]>
@@ -1214,6 +1272,8 @@ export interface CustomerFieldRefs {
   readonly tax_exempt: Prisma.FieldRef<"Customer", 'Boolean'>
   readonly balance: Prisma.FieldRef<"Customer", 'Decimal'>
   readonly qb_sync_token: Prisma.FieldRef<"Customer", 'String'>
+  readonly active: Prisma.FieldRef<"Customer", 'Boolean'>
+  readonly deleted_at: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Customer", 'DateTime'>
 }

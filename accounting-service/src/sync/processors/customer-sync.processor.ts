@@ -22,6 +22,8 @@ export class CustomerSyncProcessor extends WorkerHost {
         return this.handleCreate(job);
       case 'update':
         return this.handleUpdate(job);
+      case 'delete':
+        return this.handleDelete(job);
       default:
         throw new Error(`Unknown job: ${job.name}`);
     }
@@ -81,6 +83,8 @@ export class CustomerSyncProcessor extends WorkerHost {
       throw error; // rethrow → BullMQ triggers retry
     }
   }
+
+  //update
   private async handleUpdate(job: Job<{ customerId: string }>) {
     const { customerId } = job.data;
 
@@ -102,6 +106,62 @@ export class CustomerSyncProcessor extends WorkerHost {
 
       // 3. Push to QuickBooks
       const { Id, SyncToken } = await this.qbService.updateCustomer(customer);
+
+      // 4. Save QB synctoken back to customer record
+      await this.prisma.customer.update({
+        where: { id: customerId },
+        data: { qb_id: Id, qb_sync_token: SyncToken },
+      });
+
+      // 5. Mark log success
+      await this.prisma.syncLog.update({
+        where: { id: log.id },
+        data: {
+          status: 'success',
+          qb_id: Id,
+          attempts: job.attemptsMade,
+        },
+      });
+    } catch (error) {
+      // 6. Mark log failed
+      await this.prisma.syncLog.update({
+        where: { id: log.id },
+        data: {
+          status: 'failed',
+          error: error.message,
+          attempts: job.attemptsMade,
+        },
+      });
+
+      this.logger.error(
+        `❌ Sync failed for customer ${customerId}: ${error.message}`,
+      );
+      throw error; // rethrow → BullMQ triggers retry
+    }
+  }
+
+  //Delete
+  private async handleDelete(job: Job<{ customerId: string }>) {
+    const { customerId } = job.data;
+
+    // 1. Create sync log
+    const log = await this.prisma.syncLog.create({
+      data: {
+        entity_type: 'customer',
+        entity_id: customerId,
+        action: 'delete',
+        status: 'pending',
+      },
+    });
+
+    try {
+      // 2. Fetch customer
+      const customer = await this.prisma.customer.findUniqueOrThrow({
+        where: { id: customerId },
+      });
+
+      // 3. Push to QuickBooks
+      const { Id, SyncToken } = await this.qbService.deleteCustomer(customer);
 
       // 4. Save QB synctoken back to customer record
       await this.prisma.customer.update({
