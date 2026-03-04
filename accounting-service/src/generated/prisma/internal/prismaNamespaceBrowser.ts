@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Customer: 'Customer'
+  Customer: 'Customer',
+  SyncLog: 'SyncLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,16 +79,37 @@ export const CustomerScalarFieldEnum = {
   address: 'address',
   currency: 'currency',
   payment_terms: 'payment_terms',
-  qb_customer_id: 'qb_customer_id',
+  qb_id: 'qb_id',
   billing_address: 'billing_address',
   shipping_address: 'shipping_address',
+  city: 'city',
+  country: 'country',
+  phone: 'phone',
   tax_exempt: 'tax_exempt',
   balance: 'balance',
+  qb_sync_token: 'qb_sync_token',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const SyncLogScalarFieldEnum = {
+  id: 'id',
+  entity_type: 'entity_type',
+  entity_id: 'entity_id',
+  action: 'action',
+  status: 'status',
+  qb_id: 'qb_id',
+  direction: 'direction',
+  error: 'error',
+  attempts: 'attempts',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SyncLogScalarFieldEnum = (typeof SyncLogScalarFieldEnum)[keyof typeof SyncLogScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,8 +1,14 @@
-import { IsBoolean, IsDate, IsDateString, IsEmail, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 // dto/user-response.dto.ts
 export class CreateCustomerDto {
-  
   @IsOptional()
   @IsEmail()
   email?: string;
@@ -15,42 +21,41 @@ export class CreateCustomerDto {
 
   @IsOptional()
   @IsString()
-  address?: string
+  address?: string;
 
   @IsOptional()
   @IsString()
-  currency: string
+  currency: string;
 
   @IsString()
   @IsOptional()
-  payment_terms?: string
+  payment_terms?: string;
 
   @IsOptional()
   @IsString()
-  qb_customer_id?: string
+  qb_customer_id?: string;
 
   @IsOptional()
   @IsString()
-  billing_address?: string
+  billing_address?: string;
 
   @IsString()
   @IsOptional()
-  shipping_address?: string
+  shipping_address?: string;
 
   @IsOptional()
   @IsBoolean()
-  tax_exempt?: boolean
+  tax_exempt?: boolean;
 
   @IsOptional()
   @IsNumber()
-  balance?: number
+  balance?: number;
 
   @IsOptional()
   @IsDate()
-  create_at?: Date
+  create_at?: Date;
 
   @IsOptional()
   @IsDate()
-  updated_at?: Date
-
+  updated_at?: Date;
 }

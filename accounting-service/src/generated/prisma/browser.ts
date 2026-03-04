@@ -22,3 +22,8 @@ export * from './enums.js';
  * 
  */
 export type Customer = Prisma.CustomerModel
+/**
+ * Model SyncLog
+ * 
+ */
+export type SyncLog = Prisma.SyncLogModel

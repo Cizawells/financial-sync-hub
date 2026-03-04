@@ -1,5 +1,5 @@
-import { Customer } from "src/generated/prisma/client.js";
-import { CustomerResponseDto } from "../dto/customer-response.dto.js";
+import { Customer } from 'src/generated/prisma/client.js';
+import { CustomerResponseDto } from '../dto/customer-response.dto.js';
 
 export class CustomerMapper {
   static toResponseDto(customer: Customer): CustomerResponseDto {

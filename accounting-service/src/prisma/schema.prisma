@@ -3,7 +3,6 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -15,18 +14,38 @@ datasource db {
 
 
 model Customer {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
   first_name      String
   last_name      String
   email     String?   @unique
   address  String?
   currency String?
   payment_terms String?
-  qb_customer_id String?
+  qb_id String?
   billing_address String?
   shipping_address String?
+  city String?
+  country String?
+  phone String?
   tax_exempt Boolean?
   balance Decimal? @db.Decimal(10, 2)
+  qb_sync_token String?
   created_at DateTime?
   updated_at DateTime?
+
+  @@unique([created_at, id])
+}
+
+model SyncLog {
+  id           String   @id @default(uuid())
+  entity_type  String   // 'customer'
+  entity_id    String   // your internal customer id
+  action       String   // 'create' | 'update' | 'delete'
+  status       String   @default("pending") // 'pending' | 'success' | 'failed'
+  qb_id        String?
+  direction    String?  @default("from_erp")
+  error        String?
+  attempts     Int      @default(0)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 }

@@ -27,45 +27,51 @@ export type AggregateCustomer = {
 }
 
 export type CustomerAvgAggregateOutputType = {
-  id: number | null
   balance: runtime.Decimal | null
 }
 
 export type CustomerSumAggregateOutputType = {
-  id: number | null
   balance: runtime.Decimal | null
 }
 
 export type CustomerMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   first_name: string | null
   last_name: string | null
   email: string | null
   address: string | null
   currency: string | null
   payment_terms: string | null
-  qb_customer_id: string | null
+  qb_id: string | null
   billing_address: string | null
   shipping_address: string | null
+  city: string | null
+  country: string | null
+  phone: string | null
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
+  qb_sync_token: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type CustomerMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   first_name: string | null
   last_name: string | null
   email: string | null
   address: string | null
   currency: string | null
   payment_terms: string | null
-  qb_customer_id: string | null
+  qb_id: string | null
   billing_address: string | null
   shipping_address: string | null
+  city: string | null
+  country: string | null
+  phone: string | null
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
+  qb_sync_token: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -78,11 +84,15 @@ export type CustomerCountAggregateOutputType = {
   address: number
   currency: number
   payment_terms: number
-  qb_customer_id: number
+  qb_id: number
   billing_address: number
   shipping_address: number
+  city: number
+  country: number
+  phone: number
   tax_exempt: number
   balance: number
+  qb_sync_token: number
   created_at: number
   updated_at: number
   _all: number
@@ -90,12 +100,10 @@ export type CustomerCountAggregateOutputType = {
 
 
 export type CustomerAvgAggregateInputType = {
-  id?: true
   balance?: true
 }
 
 export type CustomerSumAggregateInputType = {
-  id?: true
   balance?: true
 }
 
@@ -107,11 +115,15 @@ export type CustomerMinAggregateInputType = {
   address?: true
   currency?: true
   payment_terms?: true
-  qb_customer_id?: true
+  qb_id?: true
   billing_address?: true
   shipping_address?: true
+  city?: true
+  country?: true
+  phone?: true
   tax_exempt?: true
   balance?: true
+  qb_sync_token?: true
   created_at?: true
   updated_at?: true
 }
@@ -124,11 +136,15 @@ export type CustomerMaxAggregateInputType = {
   address?: true
   currency?: true
   payment_terms?: true
-  qb_customer_id?: true
+  qb_id?: true
   billing_address?: true
   shipping_address?: true
+  city?: true
+  country?: true
+  phone?: true
   tax_exempt?: true
   balance?: true
+  qb_sync_token?: true
   created_at?: true
   updated_at?: true
 }
@@ -141,11 +157,15 @@ export type CustomerCountAggregateInputType = {
   address?: true
   currency?: true
   payment_terms?: true
-  qb_customer_id?: true
+  qb_id?: true
   billing_address?: true
   shipping_address?: true
+  city?: true
+  country?: true
+  phone?: true
   tax_exempt?: true
   balance?: true
+  qb_sync_token?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -238,18 +258,22 @@ export type CustomerGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type CustomerGroupByOutputType = {
-  id: number
+  id: string
   first_name: string
   last_name: string
   email: string | null
   address: string | null
   currency: string | null
   payment_terms: string | null
-  qb_customer_id: string | null
+  qb_id: string | null
   billing_address: string | null
   shipping_address: string | null
+  city: string | null
+  country: string | null
+  phone: string | null
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
+  qb_sync_token: string | null
   created_at: Date | null
   updated_at: Date | null
   _count: CustomerCountAggregateOutputType | null
@@ -278,18 +302,22 @@ export type CustomerWhereInput = {
   AND?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
   OR?: Prisma.CustomerWhereInput[]
   NOT?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
-  id?: Prisma.IntFilter<"Customer"> | number
+  id?: Prisma.StringFilter<"Customer"> | string
   first_name?: Prisma.StringFilter<"Customer"> | string
   last_name?: Prisma.StringFilter<"Customer"> | string
   email?: Prisma.StringNullableFilter<"Customer"> | string | null
   address?: Prisma.StringNullableFilter<"Customer"> | string | null
   currency?: Prisma.StringNullableFilter<"Customer"> | string | null
   payment_terms?: Prisma.StringNullableFilter<"Customer"> | string | null
-  qb_customer_id?: Prisma.StringNullableFilter<"Customer"> | string | null
+  qb_id?: Prisma.StringNullableFilter<"Customer"> | string | null
   billing_address?: Prisma.StringNullableFilter<"Customer"> | string | null
   shipping_address?: Prisma.StringNullableFilter<"Customer"> | string | null
+  city?: Prisma.StringNullableFilter<"Customer"> | string | null
+  country?: Prisma.StringNullableFilter<"Customer"> | string | null
+  phone?: Prisma.StringNullableFilter<"Customer"> | string | null
   tax_exempt?: Prisma.BoolNullableFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.StringNullableFilter<"Customer"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
 }
@@ -302,18 +330,23 @@ export type CustomerOrderByWithRelationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrderInput | Prisma.SortOrder
   payment_terms?: Prisma.SortOrderInput | Prisma.SortOrder
-  qb_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  qb_id?: Prisma.SortOrderInput | Prisma.SortOrder
   billing_address?: Prisma.SortOrderInput | Prisma.SortOrder
   shipping_address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   tax_exempt?: Prisma.SortOrderInput | Prisma.SortOrder
   balance?: Prisma.SortOrderInput | Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   email?: string
+  created_at_id?: Prisma.CustomerCreated_atIdCompoundUniqueInput
   AND?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
   OR?: Prisma.CustomerWhereInput[]
   NOT?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[]
@@ -322,14 +355,18 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"Customer"> | string | null
   currency?: Prisma.StringNullableFilter<"Customer"> | string | null
   payment_terms?: Prisma.StringNullableFilter<"Customer"> | string | null
-  qb_customer_id?: Prisma.StringNullableFilter<"Customer"> | string | null
+  qb_id?: Prisma.StringNullableFilter<"Customer"> | string | null
   billing_address?: Prisma.StringNullableFilter<"Customer"> | string | null
   shipping_address?: Prisma.StringNullableFilter<"Customer"> | string | null
+  city?: Prisma.StringNullableFilter<"Customer"> | string | null
+  country?: Prisma.StringNullableFilter<"Customer"> | string | null
+  phone?: Prisma.StringNullableFilter<"Customer"> | string | null
   tax_exempt?: Prisma.BoolNullableFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.StringNullableFilter<"Customer"> | string | null
   created_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
-}, "id" | "email">
+}, "id" | "email" | "created_at_id">
 
 export type CustomerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -339,11 +376,15 @@ export type CustomerOrderByWithAggregationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrderInput | Prisma.SortOrder
   payment_terms?: Prisma.SortOrderInput | Prisma.SortOrder
-  qb_customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  qb_id?: Prisma.SortOrderInput | Prisma.SortOrder
   billing_address?: Prisma.SortOrderInput | Prisma.SortOrder
   shipping_address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   tax_exempt?: Prisma.SortOrderInput | Prisma.SortOrder
   balance?: Prisma.SortOrderInput | Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CustomerCountOrderByAggregateInput
@@ -357,136 +398,176 @@ export type CustomerScalarWhereWithAggregatesInput = {
   AND?: Prisma.CustomerScalarWhereWithAggregatesInput | Prisma.CustomerScalarWhereWithAggregatesInput[]
   OR?: Prisma.CustomerScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CustomerScalarWhereWithAggregatesInput | Prisma.CustomerScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Customer"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   first_name?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   last_name?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   currency?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   payment_terms?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
-  qb_customer_id?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  qb_id?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   billing_address?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   shipping_address?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  city?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   tax_exempt?: Prisma.BoolNullableWithAggregatesFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
 }
 
 export type CustomerCreateInput = {
+  id?: string
   first_name: string
   last_name: string
   email?: string | null
   address?: string | null
   currency?: string | null
   payment_terms?: string | null
-  qb_customer_id?: string | null
+  qb_id?: string | null
   billing_address?: string | null
   shipping_address?: string | null
+  city?: string | null
+  country?: string | null
+  phone?: string | null
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
 
 export type CustomerUncheckedCreateInput = {
-  id?: number
+  id?: string
   first_name: string
   last_name: string
   email?: string | null
   address?: string | null
   currency?: string | null
   payment_terms?: string | null
-  qb_customer_id?: string | null
+  qb_id?: string | null
   billing_address?: string | null
   shipping_address?: string | null
+  city?: string | null
+  country?: string | null
+  phone?: string | null
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
 
 export type CustomerUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payment_terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  qb_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billing_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shipping_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CustomerUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payment_terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  qb_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billing_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shipping_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CustomerCreateManyInput = {
-  id?: number
+  id?: string
   first_name: string
   last_name: string
   email?: string | null
   address?: string | null
   currency?: string | null
   payment_terms?: string | null
-  qb_customer_id?: string | null
+  qb_id?: string | null
   billing_address?: string | null
   shipping_address?: string | null
+  city?: string | null
+  country?: string | null
+  phone?: string | null
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
 }
 
 export type CustomerUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payment_terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  qb_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billing_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shipping_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CustomerUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   payment_terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  qb_customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billing_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shipping_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type CustomerCreated_atIdCompoundUniqueInput = {
+  created_at: Date | string
+  id: string
 }
 
 export type CustomerCountOrderByAggregateInput = {
@@ -497,17 +578,20 @@ export type CustomerCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   payment_terms?: Prisma.SortOrder
-  qb_customer_id?: Prisma.SortOrder
+  qb_id?: Prisma.SortOrder
   billing_address?: Prisma.SortOrder
   shipping_address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type CustomerAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   balance?: Prisma.SortOrder
 }
 
@@ -519,11 +603,15 @@ export type CustomerMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   payment_terms?: Prisma.SortOrder
-  qb_customer_id?: Prisma.SortOrder
+  qb_id?: Prisma.SortOrder
   billing_address?: Prisma.SortOrder
   shipping_address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -536,17 +624,20 @@ export type CustomerMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   payment_terms?: Prisma.SortOrder
-  qb_customer_id?: Prisma.SortOrder
+  qb_id?: Prisma.SortOrder
   billing_address?: Prisma.SortOrder
   shipping_address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type CustomerSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   balance?: Prisma.SortOrder
 }
 
@@ -574,14 +665,6 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -592,11 +675,15 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   address?: boolean
   currency?: boolean
   payment_terms?: boolean
-  qb_customer_id?: boolean
+  qb_id?: boolean
   billing_address?: boolean
   shipping_address?: boolean
+  city?: boolean
+  country?: boolean
+  phone?: boolean
   tax_exempt?: boolean
   balance?: boolean
+  qb_sync_token?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["customer"]>
@@ -609,11 +696,15 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   address?: boolean
   currency?: boolean
   payment_terms?: boolean
-  qb_customer_id?: boolean
+  qb_id?: boolean
   billing_address?: boolean
   shipping_address?: boolean
+  city?: boolean
+  country?: boolean
+  phone?: boolean
   tax_exempt?: boolean
   balance?: boolean
+  qb_sync_token?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["customer"]>
@@ -626,11 +717,15 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   address?: boolean
   currency?: boolean
   payment_terms?: boolean
-  qb_customer_id?: boolean
+  qb_id?: boolean
   billing_address?: boolean
   shipping_address?: boolean
+  city?: boolean
+  country?: boolean
+  phone?: boolean
   tax_exempt?: boolean
   balance?: boolean
+  qb_sync_token?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["customer"]>
@@ -643,33 +738,41 @@ export type CustomerSelectScalar = {
   address?: boolean
   currency?: boolean
   payment_terms?: boolean
-  qb_customer_id?: boolean
+  qb_id?: boolean
   billing_address?: boolean
   shipping_address?: boolean
+  city?: boolean
+  country?: boolean
+  phone?: boolean
   tax_exempt?: boolean
   balance?: boolean
+  qb_sync_token?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "address" | "currency" | "payment_terms" | "qb_customer_id" | "billing_address" | "shipping_address" | "tax_exempt" | "balance" | "created_at" | "updated_at", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "address" | "currency" | "payment_terms" | "qb_id" | "billing_address" | "shipping_address" | "city" | "country" | "phone" | "tax_exempt" | "balance" | "qb_sync_token" | "created_at" | "updated_at", ExtArgs["result"]["customer"]>
 
 export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Customer"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     first_name: string
     last_name: string
     email: string | null
     address: string | null
     currency: string | null
     payment_terms: string | null
-    qb_customer_id: string | null
+    qb_id: string | null
     billing_address: string | null
     shipping_address: string | null
+    city: string | null
+    country: string | null
+    phone: string | null
     tax_exempt: boolean | null
     balance: runtime.Decimal | null
+    qb_sync_token: string | null
     created_at: Date | null
     updated_at: Date | null
   }, ExtArgs["result"]["customer"]>
@@ -1095,18 +1198,22 @@ export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Customer model
  */
 export interface CustomerFieldRefs {
-  readonly id: Prisma.FieldRef<"Customer", 'Int'>
+  readonly id: Prisma.FieldRef<"Customer", 'String'>
   readonly first_name: Prisma.FieldRef<"Customer", 'String'>
   readonly last_name: Prisma.FieldRef<"Customer", 'String'>
   readonly email: Prisma.FieldRef<"Customer", 'String'>
   readonly address: Prisma.FieldRef<"Customer", 'String'>
   readonly currency: Prisma.FieldRef<"Customer", 'String'>
   readonly payment_terms: Prisma.FieldRef<"Customer", 'String'>
-  readonly qb_customer_id: Prisma.FieldRef<"Customer", 'String'>
+  readonly qb_id: Prisma.FieldRef<"Customer", 'String'>
   readonly billing_address: Prisma.FieldRef<"Customer", 'String'>
   readonly shipping_address: Prisma.FieldRef<"Customer", 'String'>
+  readonly city: Prisma.FieldRef<"Customer", 'String'>
+  readonly country: Prisma.FieldRef<"Customer", 'String'>
+  readonly phone: Prisma.FieldRef<"Customer", 'String'>
   readonly tax_exempt: Prisma.FieldRef<"Customer", 'Boolean'>
   readonly balance: Prisma.FieldRef<"Customer", 'Decimal'>
+  readonly qb_sync_token: Prisma.FieldRef<"Customer", 'String'>
   readonly created_at: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Customer", 'DateTime'>
 }

@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  Customer: 'Customer'
+  Customer: 'Customer',
+  SyncLog: 'SyncLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "customer"
+    modelProps: "customer" | "syncLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SyncLog: {
+      payload: Prisma.$SyncLogPayload<ExtArgs>
+      fields: Prisma.SyncLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SyncLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SyncLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>
+        }
+        findFirst: {
+          args: Prisma.SyncLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SyncLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>
+        }
+        findMany: {
+          args: Prisma.SyncLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>[]
+        }
+        create: {
+          args: Prisma.SyncLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>
+        }
+        createMany: {
+          args: Prisma.SyncLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SyncLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>[]
+        }
+        delete: {
+          args: Prisma.SyncLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>
+        }
+        update: {
+          args: Prisma.SyncLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.SyncLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SyncLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SyncLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.SyncLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncLogPayload>
+        }
+        aggregate: {
+          args: Prisma.SyncLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSyncLog>
+        }
+        groupBy: {
+          args: Prisma.SyncLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SyncLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SyncLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SyncLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -525,16 +600,37 @@ export const CustomerScalarFieldEnum = {
   address: 'address',
   currency: 'currency',
   payment_terms: 'payment_terms',
-  qb_customer_id: 'qb_customer_id',
+  qb_id: 'qb_id',
   billing_address: 'billing_address',
   shipping_address: 'shipping_address',
+  city: 'city',
+  country: 'country',
+  phone: 'phone',
   tax_exempt: 'tax_exempt',
   balance: 'balance',
+  qb_sync_token: 'qb_sync_token',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const SyncLogScalarFieldEnum = {
+  id: 'id',
+  entity_type: 'entity_type',
+  entity_id: 'entity_id',
+  action: 'action',
+  status: 'status',
+  qb_id: 'qb_id',
+  direction: 'direction',
+  error: 'error',
+  attempts: 'attempts',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SyncLogScalarFieldEnum = (typeof SyncLogScalarFieldEnum)[keyof typeof SyncLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -565,20 +661,6 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 /**
  * Field references
  */
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
 
 
 /**
@@ -627,6 +709,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -739,6 +835,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   customer?: Prisma.CustomerOmit
+  syncLog?: Prisma.SyncLogOmit
 }
 
 /* Types for Logging */
