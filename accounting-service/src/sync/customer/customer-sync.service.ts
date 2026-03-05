@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { CustomerCreatedEvent } from '../customers/events/customer-created.event.js';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
-import { CustomerUpdatedEvent } from '../customers/events/customer-updated.event.js';
-import { CustomerDeletedEvent } from '../customers/events/customer-deleted.event.js';
+import { CustomerCreatedEvent } from '../../customers/events/customer-created.event.js';
+import { CustomerUpdatedEvent } from '../../customers/events/customer-updated.event.js';
+import { CustomerDeletedEvent } from '../../customers/events/customer-deleted.event.js';
+import { ProductCreatedEvent } from '../../product/events/product-created.event.js';
 
 // sync/sync.service.ts
 @Injectable()
-export class SyncService {
+export class CustomerSyncService {
   constructor(@InjectQueue('customer-sync') private syncQueue: Queue) {}
   @OnEvent('customer.created')
   async handleCustomerCreated(event: CustomerCreatedEvent) {
@@ -43,6 +44,21 @@ export class SyncService {
     await this.syncQueue.add(
       'delete',
       { customerId: event.customerId, action: 'delete' },
+      {
+        attempts: 5,
+        backoff: { type: 'exponential', delay: 2000 },
+        removeOnComplete: { count: 100 },
+        removeOnFail: false,
+      },
+    );
+  }
+
+  @OnEvent('product.created')
+  async handleProductCreated(event: ProductCreatedEvent) {
+    console.log('Syncing product:', event.productId);
+    await this.syncQueue.add(
+      'create',
+      { productId: event.productId, action: 'create' },
       {
         attempts: 5,
         backoff: { type: 'exponential', delay: 2000 },

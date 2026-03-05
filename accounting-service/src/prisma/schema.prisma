@@ -36,6 +36,55 @@ model Customer {
   updated_at DateTime?
 
   @@unique([created_at, id])
+  @@map("customers")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  
+  // Basic info
+  name        String @unique
+  description String?
+  sku         String?  @unique  // stock keeping unit
+  
+  // Type — mirrors QuickBooks item types
+  type        ProductType @default(Inventory)
+  
+  // Pricing
+  unit_price  Decimal  @db.Decimal(10, 2)
+  cost        Decimal? @db.Decimal(10, 2)  // purchase cost
+  
+  // Inventory tracking (only relevant for INVENTORY type)
+  quantity_on_hand  Int     @default(0)
+  reorder_point     Int?    // alert when stock drops below this
+
+  // Tax
+  taxable     Boolean  @default(true)
+
+  // QuickBooks sync
+  qb_id         String?  @unique
+  qb_sync_token String?
+
+  // Soft delete
+  active      Boolean   @default(true)
+  deleted_at  DateTime?
+
+  // Timestamps
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  @@unique([created_at, id])
+
+  // Relations
+  // invoice_items InvoiceItem[]  // products will appear in invoice lines
+
+  @@map("products")
+}
+
+enum ProductType {
+  Inventory      // physical product, tracks quantity
+  NonInventory  // physical but not tracked (e.g. office supplies)
+  Service        // services like consulting, labor
 }
 
 model SyncLog {
@@ -50,4 +99,6 @@ model SyncLog {
   attempts     Int      @default(0)
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
+
+  @@map("sync_logs")
 }

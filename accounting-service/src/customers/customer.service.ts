@@ -60,8 +60,8 @@ export class CustomerService {
       const nextItem = customers.pop(); // remove extra record
       nextCursor = nextItem
         ? {
-            created_at: nextItem?.created_at!,
-            id: nextItem?.id,
+            created_at: nextItem.created_at!,
+            id: nextItem.id,
           }
         : null;
     }

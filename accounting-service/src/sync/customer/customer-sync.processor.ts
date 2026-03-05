@@ -3,7 +3,7 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bullmq';
 import { PrismaService } from '../../prisma/prisma.service.js';
-import { QuickBooksService } from '../../quickbooks/quickbooks.service.js';
+import { QBCustomerService } from '../../quickbooks/customers/qb-customers.service.js';
 
 @Processor('customer-sync')
 export class CustomerSyncProcessor extends WorkerHost {
@@ -11,7 +11,7 @@ export class CustomerSyncProcessor extends WorkerHost {
 
   constructor(
     private prisma: PrismaService,
-    private qbService: QuickBooksService,
+    private qbCustomerService: QBCustomerService,
   ) {
     super();
   }
@@ -49,7 +49,8 @@ export class CustomerSyncProcessor extends WorkerHost {
       });
 
       // 3. Push to QuickBooks
-      const { Id, SyncToken } = await this.qbService.createCustomer(customer);
+      const { Id, SyncToken } =
+        await this.qbCustomerService.createCustomer(customer);
 
       // 4. Save QB id back to customer record
       await this.prisma.customer.update({
@@ -105,7 +106,8 @@ export class CustomerSyncProcessor extends WorkerHost {
       });
 
       // 3. Push to QuickBooks
-      const { Id, SyncToken } = await this.qbService.updateCustomer(customer);
+      const { Id, SyncToken } =
+        await this.qbCustomerService.updateCustomer(customer);
 
       // 4. Save QB synctoken back to customer record
       await this.prisma.customer.update({
@@ -161,7 +163,8 @@ export class CustomerSyncProcessor extends WorkerHost {
       });
 
       // 3. Push to QuickBooks
-      const { Id, SyncToken } = await this.qbService.deleteCustomer(customer);
+      const { Id, SyncToken } =
+        await this.qbCustomerService.deleteCustomer(customer);
 
       // 4. Save QB synctoken back to customer record
       await this.prisma.customer.update({

@@ -9,5 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Customer.js'
+export type * from './models/Product.js'
 export type * from './models/SyncLog.js'
 export type * from './commonInputTypes.js'

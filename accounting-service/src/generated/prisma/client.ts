@@ -45,6 +45,11 @@ export { Prisma }
  */
 export type Customer = Prisma.CustomerModel
 /**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
  * Model SyncLog
  * 
  */

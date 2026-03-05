@@ -9,6 +9,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SyncModule } from './sync/sync.module.js';
 import { QuickbooksModule } from './quickbooks/quickbooks.module.js';
 import { BullModule } from '@nestjs/bullmq';
+import { ProductModule } from './product/product.module.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { BullModule } from '@nestjs/bullmq';
     CurrencyModule,
     SyncModule,
     QuickbooksModule,
+    ProductModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
