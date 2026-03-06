@@ -2,9 +2,11 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
+  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
+  ValidateIf,
 } from 'class-validator';
 
 // dto/user-response.dto.ts
@@ -35,6 +37,12 @@ export class CreateProductDto {
   @Type(() => Number)
   @IsNumber()
   quantity_on_hand?: number;
+
+  @ValidateIf((o: CreateProductDto) => o.type === 'Inventory')
+  @IsNotEmpty()
+  @Type(() => Date)
+  @IsDate()
+  inventory_start_date?: Date;
 
   @IsOptional()
   @Type(() => Number)

@@ -56,6 +56,7 @@ model Product {
   
   // Inventory tracking (only relevant for INVENTORY type)
   quantity_on_hand  Int     @default(0)
+  inventory_start_date DateTime?
   reorder_point     Int?    // alert when stock drops below this
 
   // Tax

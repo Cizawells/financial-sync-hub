@@ -5,13 +5,14 @@ export class QBProductMapper {
   static toQuickBooks(product: Product) {
     if (product.qb_id) {
       return {
-        name: `${product.name}`,
-        quantityOnHand: product.quantity_on_hand,
+        Name: `${product.name}`,
         IncomeAccountRef: {
           name: 'Sales of Product Income',
           value: '79',
         },
         QtyOnHand: product.quantity_on_hand,
+        UnitPrice: product.unit_price || undefined,
+        TrackQtyOnHand: product.type === 'Inventory' ? true : false,
         AssetAccountRef: {
           name: 'Inventory Asset',
           value: '81',
@@ -26,12 +27,13 @@ export class QBProductMapper {
       };
     } else {
       return {
-        name: `${product.name}`,
-        quantityOnHand: product.quantity_on_hand,
+        Name: `${product.name}`,
         IncomeAccountRef: {
           name: 'Sales of Product Income',
           value: '79',
         },
+        TrackQtyOnHand: product.type === 'Inventory' ? true : false,
+        UnitPrice: product.unit_price || undefined,
         QtyOnHand: product.quantity_on_hand,
         AssetAccountRef: {
           name: 'Inventory Asset',
@@ -42,6 +44,7 @@ export class QBProductMapper {
           name: 'Cost of Goods Sold',
           value: '80',
         },
+        // InvStartDate: product.
       };
     }
   }

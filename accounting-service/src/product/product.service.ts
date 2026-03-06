@@ -90,10 +90,13 @@ export class ProductService {
     id: string,
     data: UpdateProductDto,
   ): Promise<ProductResponseDto> {
+    console.log('iddddd', id);
     const product = await this.prismaService.product.update({
       where: { id },
       data,
     });
+
+    console.log('producttttttttttt', product);
 
     this.eventEmitter.emit(
       'product.updated',

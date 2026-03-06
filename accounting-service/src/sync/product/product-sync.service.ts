@@ -22,20 +22,20 @@ export class productSyncService {
       },
     );
   }
-  //   @OnEvent('product.updated')
-  //   async handleProductUpdated(event: ProductCreatedEvent) {
-  //     console.log('Syncing customer:', event.customerId);
-  //     await this.syncQueue.add(
-  //       'update',
-  //       { customerId: event.customerId, action: 'create' },
-  //       {
-  //         attempts: 5,
-  //         backoff: { type: 'exponential', delay: 2000 },
-  //         removeOnComplete: { count: 100 },
-  //         removeOnFail: false,
-  //       },
-  //     );
-  //   }
+  @OnEvent('product.updated')
+  async handleProductUpdated(event: ProductCreatedEvent) {
+    console.log('Syncing product:', event.productId);
+    await this.syncQueue.add(
+      'update',
+      { productId: event.productId, action: 'create' },
+      {
+        attempts: 5,
+        backoff: { type: 'exponential', delay: 2000 },
+        removeOnComplete: { count: 100 },
+        removeOnFail: false,
+      },
+    );
+  }
   //   @OnEvent('product.deleted')
   //   async handleProductDeleted(event: CustomerDeletedEvent) {
   //     await this.syncQueue.add(
