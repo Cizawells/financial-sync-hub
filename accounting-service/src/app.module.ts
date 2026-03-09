@@ -11,6 +11,7 @@ import { QuickbooksModule } from './quickbooks/quickbooks.module.js';
 import { BullModule } from '@nestjs/bullmq';
 import { ProductModule } from './product/product.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { InvoiceModule } from './invoice/invoice.module.js';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
     QuickbooksModule,
     ProductModule,
     PrismaModule,
+    InvoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

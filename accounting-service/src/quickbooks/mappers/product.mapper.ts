@@ -13,6 +13,12 @@ export class QBProductMapper {
         QtyOnHand: product.quantity_on_hand,
         UnitPrice: product.unit_price || undefined,
         TrackQtyOnHand: product.type === 'Inventory' ? true : false,
+        InvStartDate: product.inventory_start_date
+          ? product.inventory_start_date
+          : undefined,
+        ReorderPoint: product.reorder_point ? product.reorder_point : undefined,
+        Taxable: product.taxable ? product.taxable : undefined,
+        Active: product.active ? product.active : undefined,
         AssetAccountRef: {
           name: 'Inventory Asset',
           value: '81',
@@ -35,6 +41,12 @@ export class QBProductMapper {
         TrackQtyOnHand: product.type === 'Inventory' ? true : false,
         UnitPrice: product.unit_price || undefined,
         QtyOnHand: product.quantity_on_hand,
+        InvStartDate: product.inventory_start_date
+          ? product.inventory_start_date
+          : undefined,
+        ReorderPoint: product.reorder_point ? product.reorder_point : undefined,
+        Taxable: product.taxable ? product.taxable : undefined,
+        Active: product.active ? product.active : undefined,
         AssetAccountRef: {
           name: 'Inventory Asset',
           value: '81',

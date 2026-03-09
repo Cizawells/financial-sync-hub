@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Customer: 'Customer',
   Product: 'Product',
+  InvoiceItem: 'InvoiceItem',
+  Invoice: 'Invoice',
   SyncLog: 'SyncLog'
 } as const
 
@@ -107,6 +109,7 @@ export const ProductScalarFieldEnum = {
   unit_price: 'unit_price',
   cost: 'cost',
   quantity_on_hand: 'quantity_on_hand',
+  inventory_start_date: 'inventory_start_date',
   reorder_point: 'reorder_point',
   taxable: 'taxable',
   qb_id: 'qb_id',
@@ -118,6 +121,42 @@ export const ProductScalarFieldEnum = {
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const InvoiceItemScalarFieldEnum = {
+  id: 'id',
+  invoice_id: 'invoice_id',
+  product_id: 'product_id',
+  quantity: 'quantity',
+  unity_price: 'unity_price',
+  tax_rate: 'tax_rate',
+  line_total: 'line_total',
+  discount_amount: 'discount_amount',
+  discount_percent: 'discount_percent'
+} as const
+
+export type InvoiceItemScalarFieldEnum = (typeof InvoiceItemScalarFieldEnum)[keyof typeof InvoiceItemScalarFieldEnum]
+
+
+export const InvoiceScalarFieldEnum = {
+  id: 'id',
+  customer_id: 'customer_id',
+  invoice_date: 'invoice_date',
+  due_date: 'due_date',
+  status: 'status',
+  total_amount: 'total_amount',
+  notes: 'notes',
+  qb_id: 'qb_id',
+  subtotal: 'subtotal',
+  tax_amount: 'tax_amount',
+  discount: 'discount',
+  currency: 'currency',
+  sync_status: 'sync_status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
 
 
 export const SyncLogScalarFieldEnum = {

@@ -28,6 +28,16 @@ export type Customer = Prisma.CustomerModel
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model InvoiceItem
+ * 
+ */
+export type InvoiceItem = Prisma.InvoiceItemModel
+/**
+ * Model Invoice
+ * 
+ */
+export type Invoice = Prisma.InvoiceModel
+/**
  * Model SyncLog
  * 
  */

@@ -22,8 +22,10 @@ export class ProductSyncProcessor extends WorkerHost {
         return this.handleCreate(job);
       case 'update':
         return this.handleUpdate(job);
+      case 'reactivate':
+        return this.handleReactivate(job);
       case 'delete':
-      // return this.handleDelete(job);
+        return this.handleDelete(job);
       default:
         throw new Error(`Unknown job: ${job.name}`);
     }
@@ -107,7 +109,7 @@ export class ProductSyncProcessor extends WorkerHost {
 
       // 3. Push to QuickBooks
       const { Id, SyncToken } =
-        await this.qbProductService.updateCustomer(product);
+        await this.qbProductService.updateProduct(product);
 
       // 4. Save QB synctoken back to product record
       await this.prisma.product.update({
@@ -141,61 +143,116 @@ export class ProductSyncProcessor extends WorkerHost {
       throw error; // rethrow → BullMQ triggers retry
     }
   }
+  //reactivate
+  private async handleReactivate(job: Job<{ productId: string }>) {
+    const { productId } = job.data;
 
-  //Delete
-  // private async handleDelete(job: Job<{ productId: string }>) {
-  //   const { productId } = job.data;
+    // 1. Create sync log
+    const log = await this.prisma.syncLog.create({
+      data: {
+        entity_type: 'product',
+        entity_id: productId,
+        action: 'reactivate',
+        status: 'pending',
+      },
+    });
 
-  //   // 1. Create sync log
-  //   const log = await this.prisma.syncLog.create({
-  //     data: {
-  //       entity_type: 'product',
-  //       entity_id: productId,
-  //       action: 'delete',
-  //       status: 'pending',
-  //     },
-  //   });
+    try {
+      // 2. Fetch product
+      const product = await this.prisma.product.findUniqueOrThrow({
+        where: { id: productId },
+      });
 
-  //   try {
-  //     // 2. Fetch product
-  //     const product = await this.prisma.product.findUniqueOrThrow({
-  //       where: { id: productId },
-  //     });
+      // 3. Push to QuickBooks
+      const { Id, SyncToken } =
+        await this.qbProductService.reactivateProduct(product);
+      console.log('success');
+      // 4. Save QB synctoken back to product record
+      await this.prisma.product.update({
+        where: { id: productId },
+        data: { qb_id: Id, qb_sync_token: SyncToken },
+      });
 
-  //     // 3. Push to QuickBooks
-  //     const { Id, SyncToken } =
-  //       await this.qbProductService.deleteCustomer(product);
+      // 5. Mark log success
+      await this.prisma.syncLog.update({
+        where: { id: log.id },
+        data: {
+          status: 'success',
+          qb_id: Id,
+          attempts: job.attemptsMade,
+        },
+      });
+    } catch (error) {
+      // 6. Mark log failed
+      await this.prisma.syncLog.update({
+        where: { id: log.id },
+        data: {
+          status: 'failed',
+          error: error.message,
+          attempts: job.attemptsMade,
+        },
+      });
 
-  //     // 4. Save QB synctoken back to product record
-  //     await this.prisma.product.update({
-  //       where: { id: productId },
-  //       data: { qb_id: Id, qb_sync_token: SyncToken },
-  //     });
+      this.logger.error(
+        `❌ Sync failed for product ${productId}: ${error.message}`,
+      );
+      throw error; // rethrow → BullMQ triggers retry
+    }
+  }
 
-  //     // 5. Mark log success
-  //     await this.prisma.syncLog.update({
-  //       where: { id: log.id },
-  //       data: {
-  //         status: 'success',
-  //         qb_id: Id,
-  //         attempts: job.attemptsMade,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     // 6. Mark log failed
-  //     await this.prisma.syncLog.update({
-  //       where: { id: log.id },
-  //       data: {
-  //         status: 'failed',
-  //         error: error.message,
-  //         attempts: job.attemptsMade,
-  //       },
-  //     });
+  //Delete;
+  private async handleDelete(job: Job<{ productId: string }>) {
+    const { productId } = job.data;
+    // 1. Create sync log
+    const log = await this.prisma.syncLog.create({
+      data: {
+        entity_type: 'product',
+        entity_id: productId,
+        action: 'delete',
+        status: 'pending',
+      },
+    });
 
-  //     this.logger.error(
-  //       `❌ Sync failed for product ${productId}: ${error.message}`,
-  //     );
-  //     throw error; // rethrow → BullMQ triggers retry
-  //   }
-  // }
+    try {
+      // 2. Fetch product
+      const product = await this.prisma.product.findUniqueOrThrow({
+        where: { id: productId },
+      });
+
+      // 3. Push to QuickBooks
+      const { Id, SyncToken } =
+        await this.qbProductService.deleteProduct(product);
+
+      // 4. Save QB synctoken back to product record
+      await this.prisma.product.update({
+        where: { id: productId },
+        data: { qb_id: Id, qb_sync_token: SyncToken },
+      });
+
+      // 5. Mark log success
+      await this.prisma.syncLog.update({
+        where: { id: log.id },
+        data: {
+          status: 'success',
+          qb_id: Id,
+          attempts: job.attemptsMade,
+        },
+      });
+    } catch (error) {
+      // 6. Mark log failed
+      await this.prisma.syncLog.update({
+        where: { id: log.id },
+        data: {
+          status: 'failed',
+          error: error.message,
+          attempts: job.attemptsMade,
+        },
+      });
+
+      this.logger.error(
+        `❌ Sync failed for product ${productId}: ${error.message}`,
+      );
+      throw error; // rethrow → BullMQ triggers retry
+    }
+  }
 }

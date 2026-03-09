@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ProductResponseDto } from './dto/product-response.dto.js';
 import { PaginationDto } from 'src/pagination/dto/pagination.dto.js';
@@ -72,6 +72,17 @@ export class ProductService {
       nextCursor,
     };
   }
+  async findOne(id: string): Promise<ProductResponseDto> {
+    const product = await this.prismaService.product.findUnique({
+      where: { id },
+    });
+
+    if (!product) {
+      throw new NotFoundException(`Product with id ${id} not found`);
+    }
+
+    return ProductMapper.toResponseDto(product);
+  }
 
   async create(data: CreateProductDto): Promise<ProductResponseDto> {
     // const products = cutsomersgzxyxsx3
@@ -90,13 +101,10 @@ export class ProductService {
     id: string,
     data: UpdateProductDto,
   ): Promise<ProductResponseDto> {
-    console.log('iddddd', id);
     const product = await this.prismaService.product.update({
       where: { id },
       data,
     });
-
-    console.log('producttttttttttt', product);
 
     this.eventEmitter.emit(
       'product.updated',
@@ -105,6 +113,24 @@ export class ProductService {
 
     return ProductMapper.toResponseDto(product);
   }
+
+  async reactivate(id: string): Promise<ProductResponseDto> {
+    console.log('iddddd', id);
+    const product = await this.prismaService.product.update({
+      where: { id },
+      data: {
+        active: true,
+      },
+    });
+
+    this.eventEmitter.emit(
+      'product.reactivated',
+      new ProductUpdatedEvent(product.id),
+    );
+
+    return ProductMapper.toResponseDto(product);
+  }
+
   async delete(id: string): Promise<ProductResponseDto> {
     const product = await this.prismaService.product.update({
       where: { id },
@@ -113,10 +139,11 @@ export class ProductService {
         deleted_at: new Date(),
       },
     });
+    console.log('deletedddd', product);
 
     this.eventEmitter.emit(
       'product.deleted',
-      new ProductDeletedEvent(product.id),
+      new ProductUpdatedEvent(product.id),
     );
 
     return ProductMapper.toResponseDto(product);

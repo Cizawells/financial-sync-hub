@@ -37,49 +37,88 @@ model Customer {
 
   @@unique([created_at, id])
   @@map("customers")
+
+  invoices Invoice[]
 }
 
 model Product {
   id          String   @id @default(uuid())
   
-  // Basic info
   name        String @unique
   description String?
   sku         String?  @unique  // stock keeping unit
-  
-  // Type — mirrors QuickBooks item types
   type        ProductType @default(Inventory)
-  
-  // Pricing
   unit_price  Decimal  @db.Decimal(10, 2)
   cost        Decimal? @db.Decimal(10, 2)  // purchase cost
-  
-  // Inventory tracking (only relevant for INVENTORY type)
   quantity_on_hand  Int     @default(0)
   inventory_start_date DateTime?
   reorder_point     Int?    // alert when stock drops below this
-
-  // Tax
   taxable     Boolean  @default(true)
-
-  // QuickBooks sync
   qb_id         String?  @unique
   qb_sync_token String?
-
-  // Soft delete
   active      Boolean   @default(true)
   deleted_at  DateTime?
-
-  // Timestamps
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
 
   @@unique([created_at, id])
 
-  // Relations
-  // invoice_items InvoiceItem[]  // products will appear in invoice lines
+  invoice_items InvoiceItem[]  
 
   @@map("products")
+}
+
+model InvoiceItem {
+  id  String @id @default(uuid())
+  invoice_id String
+  product_id  String
+  quantity Int @default(1)
+  unity_price Decimal @db.Decimal(10, 2) 
+  tax_rate Int?
+  line_total Decimal @db.Decimal(10, 2) 
+  discount_amount Decimal? @db.Decimal(10, 2)
+  discount_percent Int?
+
+  @@map("invoice_items")
+
+  invoice Invoice @relation(fields: [invoice_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+}
+
+model Invoice {
+  id  String @id @default(uuid())
+  customer_id String
+  invoice_date  DateTime
+  due_date  DateTime
+  status  InvoiceStatus
+  total_amount  Decimal @db.Decimal(10, 2) 
+  notes String?
+  qb_id String? @unique()
+  subtotal  Decimal @db.Decimal(10, 2) 
+  tax_amount  Decimal? @db.Decimal(10, 2) 
+  discount  Int?
+  currency  String?
+  sync_status SYNCSTATUS
+
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  customer   Customer   @relation(fields: [customer_id], references: [id])
+  invoice_items InvoiceItem[] 
+
+  @@map("invoices")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+}
+
+enum SYNCSTATUS {
+  SYNCED
+  NOTSYNCED
+  FAILED
 }
 
 enum ProductType {

@@ -23,6 +23,11 @@ export class ProductController {
     return this.productService.findAll(pagination);
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.productService.findOne(id);
+  }
+
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
@@ -31,6 +36,12 @@ export class ProductController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(id, updateProductDto);
+  }
+
+  @Patch(':id/reactivate')
+  reactivate(@Param('id') id: string) {
+    console.log('reactivatingggg', id);
+    return this.productService.reactivate(id);
   }
 
   @Delete(':id')

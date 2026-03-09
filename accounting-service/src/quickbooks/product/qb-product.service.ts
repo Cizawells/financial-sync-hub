@@ -22,6 +22,7 @@ export class QBProductService {
     const baseUrl = this.config.get<string>('QB_BASE_URL');
 
     const payload = QBProductMapper.toQuickBooks(product);
+    console.log('payload produt', payload);
     const response = await fetch(
       `${baseUrl}/v3/company/${realmId}/item?minorversion=75`,
       {
@@ -52,7 +53,7 @@ export class QBProductService {
       SyncToken: data.Item.SyncToken,
     };
   }
-  async updateCustomer(product: Product): Promise<{
+  async updateProduct(product: Product): Promise<{
     Id: string;
     SyncToken: string;
   }> {
@@ -63,9 +64,9 @@ export class QBProductService {
 
     const payload = QBProductMapper.toQuickBooks(product);
     const response = await fetch(
-      `${baseUrl}/v3/company/${realmId}/item/${product.id}?minorversion=75`,
+      `${baseUrl}/v3/company/${realmId}/item?minorversion=75`,
       {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
@@ -90,29 +91,90 @@ export class QBProductService {
       SyncToken: data.Item.SyncToken,
     };
   }
-  // async deleteProduct(product: Product): Promise<{
-  //   Id: string;
-  //   SyncToken: string;
-  // }> {
-  //   // if (!customer.qb_sync_token) return;
-  //   let qb = this.client.getQBClient();
-  //   // const payload = QBCustomerMapper.toQuickBooks(customer);
-  //   return new Promise((resolve, reject) => {
-  //     qb.updateCustomer(
-  //       {
-  //         Id: customer.qb_id,
-  //         SyncToken: customer.qb_sync_token,
-  //         Active: false,
-  //       },
-  //       (err, result) => {
-  //         console.log('deleted result', result);
-  //         if (err) return reject(err);
-  //         resolve({
-  //           Id: result.Id,
-  //           SyncToken: result.SyncToken,
-  //         }); // QB's ID for this customer
-  //       },
-  //     );
-  //   });
-  // }
+  async reactivateProduct(product: Product): Promise<{
+    Id: string;
+    SyncToken: string;
+  }> {
+    const accessToken = this.config.get<string>('QB_ACCESS_TOKEN');
+    const realmId = this.config.get<string>('QB_REALM_ID');
+    // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
+    const baseUrl = this.config.get<string>('QB_BASE_URL');
+
+    const payload = QBProductMapper.toQuickBooks(product);
+    const response = await fetch(
+      `${baseUrl}/v3/company/${realmId}/item?minorversion=75`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          Name: payload.Name,
+          ExpenseAccountRef: payload.ExpenseAccountRef,
+          Active: true,
+          Type: payload.Type,
+          QtyOnHand: payload.QtyOnHand,
+          TrackQtyOnHand: payload.TrackQtyOnHand,
+          InvStartDate: payload.InvStartDate,
+          AssetAccountRef: payload.AssetAccountRef,
+          IncomeAccountRef: payload.IncomeAccountRef,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(
+        `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
+      );
+    }
+
+    const data = (await response.json()) as {
+      Item: { Id: string; SyncToken: string };
+    };
+    return {
+      Id: data.Item.Id,
+      SyncToken: data.Item.SyncToken,
+    };
+  }
+  async deleteProduct(product: Product): Promise<{
+    Id: string;
+    SyncToken: string;
+  }> {
+    const accessToken = this.config.get<string>('QB_ACCESS_TOKEN');
+    const realmId = this.config.get<string>('QB_REALM_ID');
+    // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
+    const baseUrl = this.config.get<string>('QB_BASE_URL');
+
+    const payload = QBProductMapper.toQuickBooks(product);
+    const response = await fetch(
+      `${baseUrl}/v3/company/${realmId}/item?minorversion=75`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({ ...payload, Active: false }),
+      },
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(
+        `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
+      );
+    }
+
+    const data = (await response.json()) as {
+      Item: { Id: string; SyncToken: string };
+    };
+    return {
+      Id: data.Item.Id,
+      SyncToken: data.Item.SyncToken,
+    };
+  }
 }

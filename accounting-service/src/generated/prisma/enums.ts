@@ -9,6 +9,23 @@
 * 🟢 You can import this file directly.
 */
 
+export const InvoiceStatus = {
+  DRAFT: 'DRAFT',
+  SENT: 'SENT'
+} as const
+
+export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]
+
+
+export const SYNCSTATUS = {
+  SYNCED: 'SYNCED',
+  NOTSYNCED: 'NOTSYNCED',
+  FAILED: 'FAILED'
+} as const
+
+export type SYNCSTATUS = (typeof SYNCSTATUS)[keyof typeof SYNCSTATUS]
+
+
 export const ProductType = {
   Inventory: 'Inventory',
   NonInventory: 'NonInventory',
