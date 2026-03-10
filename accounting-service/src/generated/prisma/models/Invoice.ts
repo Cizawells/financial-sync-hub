@@ -49,6 +49,7 @@ export type InvoiceMinAggregateOutputType = {
   total_amount: runtime.Decimal | null
   notes: string | null
   qb_id: string | null
+  qb_sync_token: string | null
   subtotal: runtime.Decimal | null
   tax_amount: runtime.Decimal | null
   discount: number | null
@@ -67,6 +68,7 @@ export type InvoiceMaxAggregateOutputType = {
   total_amount: runtime.Decimal | null
   notes: string | null
   qb_id: string | null
+  qb_sync_token: string | null
   subtotal: runtime.Decimal | null
   tax_amount: runtime.Decimal | null
   discount: number | null
@@ -85,6 +87,7 @@ export type InvoiceCountAggregateOutputType = {
   total_amount: number
   notes: number
   qb_id: number
+  qb_sync_token: number
   subtotal: number
   tax_amount: number
   discount: number
@@ -119,6 +122,7 @@ export type InvoiceMinAggregateInputType = {
   total_amount?: true
   notes?: true
   qb_id?: true
+  qb_sync_token?: true
   subtotal?: true
   tax_amount?: true
   discount?: true
@@ -137,6 +141,7 @@ export type InvoiceMaxAggregateInputType = {
   total_amount?: true
   notes?: true
   qb_id?: true
+  qb_sync_token?: true
   subtotal?: true
   tax_amount?: true
   discount?: true
@@ -155,6 +160,7 @@ export type InvoiceCountAggregateInputType = {
   total_amount?: true
   notes?: true
   qb_id?: true
+  qb_sync_token?: true
   subtotal?: true
   tax_amount?: true
   discount?: true
@@ -256,15 +262,16 @@ export type InvoiceGroupByOutputType = {
   customer_id: string
   invoice_date: Date
   due_date: Date
-  status: $Enums.InvoiceStatus
+  status: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal
   notes: string | null
   qb_id: string | null
+  qb_sync_token: string | null
   subtotal: runtime.Decimal
   tax_amount: runtime.Decimal | null
   discount: number | null
   currency: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status: $Enums.SYNCSTATUS | null
   created_at: Date
   updated_at: Date
   _count: InvoiceCountAggregateOutputType | null
@@ -297,15 +304,16 @@ export type InvoiceWhereInput = {
   customer_id?: Prisma.StringFilter<"Invoice"> | string
   invoice_date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   due_date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
-  status?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
+  status?: Prisma.EnumInvoiceStatusNullableFilter<"Invoice"> | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   qb_id?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  qb_sync_token?: Prisma.StringNullableFilter<"Invoice"> | string | null
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.IntNullableFilter<"Invoice"> | number | null
   currency?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Invoice"> | $Enums.SYNCSTATUS
+  sync_status?: Prisma.EnumSYNCSTATUSNullableFilter<"Invoice"> | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -317,15 +325,16 @@ export type InvoiceOrderByWithRelationInput = {
   customer_id?: Prisma.SortOrder
   invoice_date?: Prisma.SortOrder
   due_date?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
   total_amount?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   tax_amount?: Prisma.SortOrderInput | Prisma.SortOrder
   discount?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrderInput | Prisma.SortOrder
-  sync_status?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
@@ -341,14 +350,15 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   customer_id?: Prisma.StringFilter<"Invoice"> | string
   invoice_date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   due_date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
-  status?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
+  status?: Prisma.EnumInvoiceStatusNullableFilter<"Invoice"> | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  qb_sync_token?: Prisma.StringNullableFilter<"Invoice"> | string | null
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.IntNullableFilter<"Invoice"> | number | null
   currency?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Invoice"> | $Enums.SYNCSTATUS
+  sync_status?: Prisma.EnumSYNCSTATUSNullableFilter<"Invoice"> | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -360,15 +370,16 @@ export type InvoiceOrderByWithAggregationInput = {
   customer_id?: Prisma.SortOrder
   invoice_date?: Prisma.SortOrder
   due_date?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
   total_amount?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   tax_amount?: Prisma.SortOrderInput | Prisma.SortOrder
   discount?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrderInput | Prisma.SortOrder
-  sync_status?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.InvoiceCountOrderByAggregateInput
@@ -386,15 +397,16 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   customer_id?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   invoice_date?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   due_date?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
-  status?: Prisma.EnumInvoiceStatusWithAggregatesFilter<"Invoice"> | $Enums.InvoiceStatus
+  status?: Prisma.EnumInvoiceStatusNullableWithAggregatesFilter<"Invoice"> | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   qb_id?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  qb_sync_token?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   subtotal?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.DecimalNullableWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.IntNullableWithAggregatesFilter<"Invoice"> | number | null
   currency?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSWithAggregatesFilter<"Invoice"> | $Enums.SYNCSTATUS
+  sync_status?: Prisma.EnumSYNCSTATUSNullableWithAggregatesFilter<"Invoice"> | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
 }
@@ -403,15 +415,16 @@ export type InvoiceCreateInput = {
   id?: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutInvoicesInput
@@ -423,15 +436,16 @@ export type InvoiceUncheckedCreateInput = {
   customer_id: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
   invoice_items?: Prisma.InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -441,15 +455,16 @@ export type InvoiceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutInvoicesNestedInput
@@ -461,15 +476,16 @@ export type InvoiceUncheckedUpdateInput = {
   customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoice_items?: Prisma.InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -480,15 +496,16 @@ export type InvoiceCreateManyInput = {
   customer_id: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -497,15 +514,16 @@ export type InvoiceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -515,15 +533,16 @@ export type InvoiceUncheckedUpdateManyInput = {
   customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -552,6 +571,7 @@ export type InvoiceCountOrderByAggregateInput = {
   total_amount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   qb_id?: Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   tax_amount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -577,6 +597,7 @@ export type InvoiceMaxOrderByAggregateInput = {
   total_amount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   qb_id?: Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   tax_amount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -595,6 +616,7 @@ export type InvoiceMinOrderByAggregateInput = {
   total_amount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   qb_id?: Prisma.SortOrder
+  qb_sync_token?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   tax_amount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -667,27 +689,28 @@ export type InvoiceUpdateOneRequiredWithoutInvoice_itemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutInvoice_itemsInput, Prisma.InvoiceUpdateWithoutInvoice_itemsInput>, Prisma.InvoiceUncheckedUpdateWithoutInvoice_itemsInput>
 }
 
-export type EnumInvoiceStatusFieldUpdateOperationsInput = {
-  set?: $Enums.InvoiceStatus
+export type NullableEnumInvoiceStatusFieldUpdateOperationsInput = {
+  set?: $Enums.InvoiceStatus | null
 }
 
-export type EnumSYNCSTATUSFieldUpdateOperationsInput = {
-  set?: $Enums.SYNCSTATUS
+export type NullableEnumSYNCSTATUSFieldUpdateOperationsInput = {
+  set?: $Enums.SYNCSTATUS | null
 }
 
 export type InvoiceCreateWithoutCustomerInput = {
   id?: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
   invoice_items?: Prisma.InvoiceItemCreateNestedManyWithoutInvoiceInput
@@ -697,15 +720,16 @@ export type InvoiceUncheckedCreateWithoutCustomerInput = {
   id?: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
   invoice_items?: Prisma.InvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
@@ -745,15 +769,16 @@ export type InvoiceScalarWhereInput = {
   customer_id?: Prisma.StringFilter<"Invoice"> | string
   invoice_date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   due_date?: Prisma.DateTimeFilter<"Invoice"> | Date | string
-  status?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
+  status?: Prisma.EnumInvoiceStatusNullableFilter<"Invoice"> | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"Invoice"> | string | null
   qb_id?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  qb_sync_token?: Prisma.StringNullableFilter<"Invoice"> | string | null
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.DecimalNullableFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.IntNullableFilter<"Invoice"> | number | null
   currency?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Invoice"> | $Enums.SYNCSTATUS
+  sync_status?: Prisma.EnumSYNCSTATUSNullableFilter<"Invoice"> | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Invoice"> | Date | string
 }
@@ -762,15 +787,16 @@ export type InvoiceCreateWithoutInvoice_itemsInput = {
   id?: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutInvoicesInput
@@ -781,15 +807,16 @@ export type InvoiceUncheckedCreateWithoutInvoice_itemsInput = {
   customer_id: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -814,15 +841,16 @@ export type InvoiceUpdateWithoutInvoice_itemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutInvoicesNestedInput
@@ -833,15 +861,16 @@ export type InvoiceUncheckedUpdateWithoutInvoice_itemsInput = {
   customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -850,15 +879,16 @@ export type InvoiceCreateManyCustomerInput = {
   id?: string
   invoice_date: Date | string
   due_date: Date | string
-  status: $Enums.InvoiceStatus
+  status?: $Enums.InvoiceStatus | null
   total_amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   qb_id?: string | null
+  qb_sync_token?: string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: number | null
   currency?: string | null
-  sync_status: $Enums.SYNCSTATUS
+  sync_status?: $Enums.SYNCSTATUS | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -867,15 +897,16 @@ export type InvoiceUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoice_items?: Prisma.InvoiceItemUpdateManyWithoutInvoiceNestedInput
@@ -885,15 +916,16 @@ export type InvoiceUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoice_items?: Prisma.InvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -903,15 +935,16 @@ export type InvoiceUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoice_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   due_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  status?: Prisma.NullableEnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus | null
   total_amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax_amount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   discount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  sync_status?: Prisma.NullableEnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -956,6 +989,7 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   total_amount?: boolean
   notes?: boolean
   qb_id?: boolean
+  qb_sync_token?: boolean
   subtotal?: boolean
   tax_amount?: boolean
   discount?: boolean
@@ -977,6 +1011,7 @@ export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   total_amount?: boolean
   notes?: boolean
   qb_id?: boolean
+  qb_sync_token?: boolean
   subtotal?: boolean
   tax_amount?: boolean
   discount?: boolean
@@ -996,6 +1031,7 @@ export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   total_amount?: boolean
   notes?: boolean
   qb_id?: boolean
+  qb_sync_token?: boolean
   subtotal?: boolean
   tax_amount?: boolean
   discount?: boolean
@@ -1015,6 +1051,7 @@ export type InvoiceSelectScalar = {
   total_amount?: boolean
   notes?: boolean
   qb_id?: boolean
+  qb_sync_token?: boolean
   subtotal?: boolean
   tax_amount?: boolean
   discount?: boolean
@@ -1024,7 +1061,7 @@ export type InvoiceSelectScalar = {
   updated_at?: boolean
 }
 
-export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customer_id" | "invoice_date" | "due_date" | "status" | "total_amount" | "notes" | "qb_id" | "subtotal" | "tax_amount" | "discount" | "currency" | "sync_status" | "created_at" | "updated_at", ExtArgs["result"]["invoice"]>
+export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customer_id" | "invoice_date" | "due_date" | "status" | "total_amount" | "notes" | "qb_id" | "qb_sync_token" | "subtotal" | "tax_amount" | "discount" | "currency" | "sync_status" | "created_at" | "updated_at", ExtArgs["result"]["invoice"]>
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   invoice_items?: boolean | Prisma.Invoice$invoice_itemsArgs<ExtArgs>
@@ -1048,15 +1085,16 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     customer_id: string
     invoice_date: Date
     due_date: Date
-    status: $Enums.InvoiceStatus
+    status: $Enums.InvoiceStatus | null
     total_amount: runtime.Decimal
     notes: string | null
     qb_id: string | null
+    qb_sync_token: string | null
     subtotal: runtime.Decimal
     tax_amount: runtime.Decimal | null
     discount: number | null
     currency: string | null
-    sync_status: $Enums.SYNCSTATUS
+    sync_status: $Enums.SYNCSTATUS | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["invoice"]>
@@ -1492,6 +1530,7 @@ export interface InvoiceFieldRefs {
   readonly total_amount: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly notes: Prisma.FieldRef<"Invoice", 'String'>
   readonly qb_id: Prisma.FieldRef<"Invoice", 'String'>
+  readonly qb_sync_token: Prisma.FieldRef<"Invoice", 'String'>
   readonly subtotal: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly tax_amount: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly discount: Prisma.FieldRef<"Invoice", 'Int'>

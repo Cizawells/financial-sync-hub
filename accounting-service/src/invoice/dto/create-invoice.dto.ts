@@ -7,9 +7,11 @@ import {
   ArrayMinSize,
   IsArray,
   IsNumber,
+  IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateInvoiceItemDto } from './create-invoice-item.js';
+import { InvoiceStatus, SYNCSTATUS } from '../../generated/prisma/enums.js';
 
 export class CreateInvoiceDto {
   @IsString()
@@ -22,6 +24,28 @@ export class CreateInvoiceDto {
   @Type(() => Date)
   @IsDate()
   due_date: Date;
+
+  @IsOptional()
+  @IsEnum(SYNCSTATUS)
+  sync_status?: SYNCSTATUS;
+
+  @IsOptional()
+  @IsEnum(InvoiceStatus)
+  status?: InvoiceStatus;
+
+  @IsNumber()
+  total_amount: number;
+
+  @IsOptional()
+  @IsString()
+  qb_id: string;
+
+  @IsNumber()
+  subtotal: number;
+
+  @IsOptional()
+  @IsNumber()
+  tax_amount: number;
 
   @IsOptional()
   @IsString()
@@ -41,5 +65,5 @@ export class CreateInvoiceDto {
   @ArrayMinSize(1) // at least one line item
   @ValidateNested({ each: true }) // validate each item in array
   @Type(() => CreateInvoiceItemDto) // transform each item
-  items: CreateInvoiceItemDto[];
+  invoice_items: CreateInvoiceItemDto[];
 }

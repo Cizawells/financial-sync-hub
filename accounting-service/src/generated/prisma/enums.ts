@@ -11,7 +11,10 @@
 
 export const InvoiceStatus = {
   DRAFT: 'DRAFT',
-  SENT: 'SENT'
+  SENT: 'SENT',
+  PAID: 'PAID',
+  VOID: 'VOID',
+  OVERDUE: 'OVERDUE'
 } as const
 
 export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]

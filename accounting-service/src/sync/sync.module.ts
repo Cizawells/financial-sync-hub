@@ -6,6 +6,8 @@ import { CustomerSyncProcessor } from './customer/customer-sync.processor.js';
 import { productSyncService } from './product/product-sync.service.js';
 import { CustomerSyncService } from './customer/customer-sync.service.js';
 import { ProductSyncProcessor } from './product/product.sync.processor.js';
+import { InvoiceSyncService } from './invoice/invoice-sync.service.js';
+import { InvoiceSyncProcessor } from './invoice/invoice-sync.processor.js';
 
 @Module({
   providers: [
@@ -14,11 +16,14 @@ import { ProductSyncProcessor } from './product/product.sync.processor.js';
     PrismaService,
     productSyncService,
     ProductSyncProcessor,
+    InvoiceSyncService,
+    InvoiceSyncProcessor,
   ],
   imports: [
     BullModule.registerQueue(
       { name: 'customer-sync' },
       { name: 'product-sync' },
+      { name: 'invoice-sync' },
     ),
     QuickbooksModule,
   ],

@@ -4,6 +4,7 @@ import { QuickBooksService } from './quickbooks.service.js';
 import { QuickBooksController } from './quickbooks.controller.js';
 import { QBCustomerService } from './customers/qb-customers.service.js';
 import { QBProductService } from './product/qb-product.service.js';
+import { QBInvoiceService } from './invoice/qb-invoice.service.js';
 
 @Module({
   controllers: [QuickBooksController],
@@ -12,7 +13,13 @@ import { QBProductService } from './product/qb-product.service.js';
     QuickBooksService,
     QBCustomerService,
     QBProductService,
+    QBInvoiceService,
   ],
-  exports: [QuickBooksService, QBCustomerService, QBProductService],
+  exports: [
+    QuickBooksService,
+    QBCustomerService,
+    QBProductService,
+    QBInvoiceService,
+  ],
 })
 export class QuickbooksModule {}

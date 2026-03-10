@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Customer, Product } from '../../generated/prisma/client.js';
-import { QBCustomerMapper } from '../mappers/customer.mapper.js';
 import { QuickBooksService } from '../quickbooks.service.js';
 import { QBProductMapper } from '../mappers/product.mapper.js';
 import { ConfigService } from '@nestjs/config';
+import { Product } from '../../generated/prisma/client.js';
 
 @Injectable()
 export class QBProductService {

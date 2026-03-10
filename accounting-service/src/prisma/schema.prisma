@@ -73,7 +73,7 @@ model InvoiceItem {
   invoice_id String
   product_id  String
   quantity Int @default(1)
-  unity_price Decimal @db.Decimal(10, 2) 
+  unit_price Decimal @db.Decimal(10, 2) 
   tax_rate Int?
   line_total Decimal @db.Decimal(10, 2) 
   discount_amount Decimal? @db.Decimal(10, 2)
@@ -91,15 +91,16 @@ model Invoice {
   customer_id String
   invoice_date  DateTime
   due_date  DateTime
-  status  InvoiceStatus
+  status  InvoiceStatus?
   total_amount  Decimal @db.Decimal(10, 2) 
   notes String?
   qb_id String? @unique()
+  qb_sync_token String?
   subtotal  Decimal @db.Decimal(10, 2) 
   tax_amount  Decimal? @db.Decimal(10, 2) 
   discount  Int?
   currency  String?
-  sync_status SYNCSTATUS
+  sync_status SYNCSTATUS?
 
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
@@ -113,6 +114,9 @@ model Invoice {
 enum InvoiceStatus {
   DRAFT
   SENT
+  PAID
+  VOID
+  OVERDUE
 }
 
 enum SYNCSTATUS {

@@ -3,6 +3,10 @@ import { IsString, IsNumber, IsOptional, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateInvoiceItemDto {
+  @IsOptional()
+  @IsString()
+  invoice_id: string;
+
   @IsString()
   product_id: string;
 
@@ -13,7 +17,11 @@ export class CreateInvoiceItemDto {
 
   @Type(() => Number)
   @IsNumber()
-  unit_price: number; // can override product's default price
+  unit_price: number;
+
+  @Type(() => Number)
+  @IsNumber()
+  line_total: number;
 
   @IsOptional()
   @Type(() => Number)
