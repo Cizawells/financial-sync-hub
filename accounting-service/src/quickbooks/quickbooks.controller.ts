@@ -1,5 +1,5 @@
 // quickbooks/quickbooks.controller.ts
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { QuickBooksAuthService } from './quickbooks-auth.service.js';
 
 @Controller('quickbooks')
@@ -19,5 +19,12 @@ export class QuickBooksController {
 
     // Tokens will print in your terminal console
     return res.json(tokens); // also visible in browser
+  }
+
+  @Post('save-token')
+  async saveToken(
+    @Body() body: { access_token: string; refresh_token: string },
+  ) {
+    return this.authService.saveToken(body.access_token, body.refresh_token);
   }
 }

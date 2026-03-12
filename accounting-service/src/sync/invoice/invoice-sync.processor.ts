@@ -49,13 +49,21 @@ export class InvoiceSyncProcessor extends WorkerHost {
       const invoice = await this.prisma.invoice.findUniqueOrThrow({
         where: { id: invoiceId },
         include: {
-          invoice_items: true,
+          invoice_items: {
+            include: {
+              product: true,
+            },
+          },
+          customer: true,
         },
       });
+
+      console.log('invoice to createeee', invoice);
 
       // 3. Push to QuickBooks
       const { Id, SyncToken } =
         await this.qbInvoiceService.createInvoice(invoice);
+      console.log('successs sync');
       // 4. Save QB id back to product record
       await this.prisma.invoice.update({
         where: { id: invoiceId },

@@ -64,3 +64,8 @@ export type Invoice = Prisma.InvoiceModel
  * 
  */
 export type SyncLog = Prisma.SyncLogModel
+/**
+ * Model QbToken
+ * 
+ */
+export type QbToken = Prisma.QbTokenModel

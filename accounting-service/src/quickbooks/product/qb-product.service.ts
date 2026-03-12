@@ -3,19 +3,21 @@ import { QuickBooksService } from '../quickbooks.service.js';
 import { QBProductMapper } from '../mappers/product.mapper.js';
 import { ConfigService } from '@nestjs/config';
 import { Product } from '../../generated/prisma/client.js';
+import { QuickBooksAuthService } from '../quickbooks-auth.service.js';
 
 @Injectable()
 export class QBProductService {
   constructor(
     private client: QuickBooksService,
     private config: ConfigService,
+    private authService: QuickBooksAuthService,
   ) {}
 
   async createProduct(product: Product): Promise<{
     Id: string;
     SyncToken: string;
   }> {
-    const accessToken = this.config.get<string>('QB_ACCESS_TOKEN');
+    const accessToken = await this.authService.getValidAccessToken();
     const realmId = this.config.get<string>('QB_REALM_ID');
     // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
     const baseUrl = this.config.get<string>('QB_BASE_URL');
@@ -56,7 +58,7 @@ export class QBProductService {
     Id: string;
     SyncToken: string;
   }> {
-    const accessToken = this.config.get<string>('QB_ACCESS_TOKEN');
+    const accessToken = await this.authService.getValidAccessToken();
     const realmId = this.config.get<string>('QB_REALM_ID');
     // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
     const baseUrl = this.config.get<string>('QB_BASE_URL');
@@ -94,7 +96,7 @@ export class QBProductService {
     Id: string;
     SyncToken: string;
   }> {
-    const accessToken = this.config.get<string>('QB_ACCESS_TOKEN');
+    const accessToken = await this.authService.getValidAccessToken();
     const realmId = this.config.get<string>('QB_REALM_ID');
     // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
     const baseUrl = this.config.get<string>('QB_BASE_URL');
@@ -142,7 +144,7 @@ export class QBProductService {
     Id: string;
     SyncToken: string;
   }> {
-    const accessToken = this.config.get<string>('QB_ACCESS_TOKEN');
+    const accessToken = await this.authService.getValidAccessToken();
     const realmId = this.config.get<string>('QB_REALM_ID');
     // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
     const baseUrl = this.config.get<string>('QB_BASE_URL');

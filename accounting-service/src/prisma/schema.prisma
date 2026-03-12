@@ -146,3 +146,14 @@ model SyncLog {
 
   @@map("sync_logs")
 }
+
+model QbToken {
+  id            Int      @id @default(1) // single row, always id=1
+  access_token  String
+  refresh_token String
+  expires_at    DateTime
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@map("qb_tokens")
+}

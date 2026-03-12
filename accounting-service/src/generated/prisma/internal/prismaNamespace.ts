@@ -388,7 +388,8 @@ export const ModelName = {
   Product: 'Product',
   InvoiceItem: 'InvoiceItem',
   Invoice: 'Invoice',
-  SyncLog: 'SyncLog'
+  SyncLog: 'SyncLog',
+  QbToken: 'QbToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "customer" | "product" | "invoiceItem" | "invoice" | "syncLog"
+    modelProps: "customer" | "product" | "invoiceItem" | "invoice" | "syncLog" | "qbToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    QbToken: {
+      payload: Prisma.$QbTokenPayload<ExtArgs>
+      fields: Prisma.QbTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QbTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QbTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.QbTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QbTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>
+        }
+        findMany: {
+          args: Prisma.QbTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>[]
+        }
+        create: {
+          args: Prisma.QbTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>
+        }
+        createMany: {
+          args: Prisma.QbTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QbTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.QbTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>
+        }
+        update: {
+          args: Prisma.QbTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.QbTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QbTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QbTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.QbTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QbTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.QbTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQbToken>
+        }
+        groupBy: {
+          args: Prisma.QbTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QbTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QbTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QbTokenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -918,6 +993,18 @@ export const SyncLogScalarFieldEnum = {
 } as const
 
 export type SyncLogScalarFieldEnum = (typeof SyncLogScalarFieldEnum)[keyof typeof SyncLogScalarFieldEnum]
+
+
+export const QbTokenScalarFieldEnum = {
+  id: 'id',
+  access_token: 'access_token',
+  refresh_token: 'refresh_token',
+  expires_at: 'expires_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type QbTokenScalarFieldEnum = (typeof QbTokenScalarFieldEnum)[keyof typeof QbTokenScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1168,6 +1255,7 @@ export type GlobalOmitConfig = {
   invoiceItem?: Prisma.InvoiceItemOmit
   invoice?: Prisma.InvoiceOmit
   syncLog?: Prisma.SyncLogOmit
+  qbToken?: Prisma.QbTokenOmit
 }
 
 /* Types for Logging */

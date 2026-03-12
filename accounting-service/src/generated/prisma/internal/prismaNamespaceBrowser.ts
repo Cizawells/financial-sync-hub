@@ -55,7 +55,8 @@ export const ModelName = {
   Product: 'Product',
   InvoiceItem: 'InvoiceItem',
   Invoice: 'Invoice',
-  SyncLog: 'SyncLog'
+  SyncLog: 'SyncLog',
+  QbToken: 'QbToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -175,6 +176,18 @@ export const SyncLogScalarFieldEnum = {
 } as const
 
 export type SyncLogScalarFieldEnum = (typeof SyncLogScalarFieldEnum)[keyof typeof SyncLogScalarFieldEnum]
+
+
+export const QbTokenScalarFieldEnum = {
+  id: 'id',
+  access_token: 'access_token',
+  refresh_token: 'refresh_token',
+  expires_at: 'expires_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type QbTokenScalarFieldEnum = (typeof QbTokenScalarFieldEnum)[keyof typeof QbTokenScalarFieldEnum]
 
 
 export const SortOrder = {
