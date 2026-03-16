@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CustomerResponseDto } from './dto/customer-response.dto.js';
 import { CustomerMapper } from './mappers/customer-mapper.js';
@@ -10,6 +14,8 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CustomerCreatedEvent } from './events/customer-created.event.js';
 import { CustomerUpdatedEvent } from './events/customer-updated.event.js';
 import { CustomerDeletedEvent } from './events/customer-deleted.event.js';
+import { Prisma } from '../generated/prisma/client.js';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 
 @Injectable()
 export class CustomerService {
@@ -74,36 +80,63 @@ export class CustomerService {
   }
 
   async create(data: CreateCustomerDto): Promise<CustomerResponseDto> {
-    // const customers = cutsomersgzxyxsx3
-    const customer = await this.prismaService.customer.create({
-      data: {
-        ...data,
-        created_at: new Date(),
-      },
-    });
+    try {
+      const customer = await this.prismaService.customer.create({
+        data: {
+          ...data,
+          created_at: new Date(),
+        },
+      });
 
-    this.eventEmitter.emit(
-      'customer.created',
-      new CustomerCreatedEvent(customer.id),
-    );
+      this.eventEmitter.emit(
+        'customer.created',
+        new CustomerCreatedEvent(customer.id),
+      );
 
-    return CustomerMapper.toResponseDto(customer);
+      return CustomerMapper.toResponseDto(customer);
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        const driverError = (error.meta as any)?.driverAdapterError?.cause;
+
+        if (driverError?.originalCode === '23505') {
+          const message: string = driverError.originalMessage;
+
+          if (message.includes('customers_email_key')) {
+            throw new ConflictException('Email already exists');
+          }
+
+          throw new ConflictException('Unique constraint violation');
+        }
+      }
+
+      throw error;
+    }
   }
   async update(
     id: string,
     data: UpdateCustomerDto,
   ): Promise<CustomerResponseDto> {
-    const customer = await this.prismaService.customer.update({
-      where: { id },
-      data,
-    });
+    try {
+      const customer = await this.prismaService.customer.update({
+        where: { id },
+        data,
+      });
 
-    this.eventEmitter.emit(
-      'customer.updated',
-      new CustomerUpdatedEvent(customer.id),
-    );
+      this.eventEmitter.emit(
+        'customer.updated',
+        new CustomerUpdatedEvent(customer.id),
+      );
+      return CustomerMapper.toResponseDto(customer);
+    } catch (error: unknown) {
+      if (
+        error instanceof PrismaClientKnownRequestError &&
+        error.code === 'P2025'
+      ) {
+        throw new NotFoundException(`User with id ${id} not found`);
+      }
 
-    return CustomerMapper.toResponseDto(customer);
+      throw error;
+    }
   }
   async delete(id: string): Promise<CustomerResponseDto> {
     const customer = await this.prismaService.customer.update({

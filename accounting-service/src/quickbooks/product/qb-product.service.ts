@@ -19,11 +19,9 @@ export class QBProductService {
   }> {
     const accessToken = await this.authService.getValidAccessToken();
     const realmId = this.config.get<string>('QB_REALM_ID');
-    // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
     const baseUrl = this.config.get<string>('QB_BASE_URL');
 
     const payload = QBProductMapper.toQuickBooks(product);
-    console.log('payload produt', payload);
     const response = await fetch(
       `${baseUrl}/v3/company/${realmId}/item?minorversion=75`,
       {
@@ -38,9 +36,9 @@ export class QBProductService {
     );
 
     if (!response.ok) {
-      const error = await response.json();
-      console.log('faillllleddd', JSON.stringify(error));
-      console.log('faillllleddd', error.message);
+      const error = (await response.json()) as {
+        message: string;
+      };
       throw new Error(
         `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
       );
@@ -60,7 +58,6 @@ export class QBProductService {
   }> {
     const accessToken = await this.authService.getValidAccessToken();
     const realmId = this.config.get<string>('QB_REALM_ID');
-    // const isSandbox = this.config.get('QB_ENVIRONMENT') === 'sandbox';
     const baseUrl = this.config.get<string>('QB_BASE_URL');
 
     const payload = QBProductMapper.toQuickBooks(product);
@@ -78,7 +75,9 @@ export class QBProductService {
     );
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = (await response.json()) as {
+        message: string;
+      };
       throw new Error(
         `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
       );

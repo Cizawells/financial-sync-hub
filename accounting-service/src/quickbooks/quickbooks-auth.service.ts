@@ -31,10 +31,15 @@ export class QuickBooksAuthService {
   // QB redirects here after user approves
   async handleCallback(url: string) {
     const token = await this.oauthClient.createToken(url);
-    // Save these tokens to DB or .env for reuse
-    console.log('Access Token:', token.getJson().access_token);
-    console.log('Refresh Token:', token.getJson().refresh_token);
-    return token.getJson();
+    const tokens = token.getJson() as {
+      access_token: string;
+      refresh_token: string;
+    };
+
+    // ✅ save to DB immediately
+    await this.saveToken(tokens.access_token, tokens.refresh_token);
+
+    return tokens;
   }
 
   async saveToken(accessToken: string, refreshToken: string) {
@@ -69,7 +74,6 @@ export class QuickBooksAuthService {
     // check if token is still valid (with 5 min buffer)
     const isExpired =
       new Date() >= new Date(tokenRecord.expires_at.getTime() - 5 * 60 * 1000);
-    console.log('token is expiredddd', isExpired);
     if (!isExpired) {
       return tokenRecord.access_token; // still valid, return as is
     }
@@ -79,22 +83,21 @@ export class QuickBooksAuthService {
   }
 
   private async refreshAccessToken(refreshToken: string): Promise<string> {
-    this.oauthClient.setToken({
-      refresh_token: refreshToken,
-    });
+    try {
+      this.oauthClient.setToken({ refresh_token: refreshToken });
+      const authResponse = await this.oauthClient.refresh();
+      const newTokens = authResponse.getJson() as {
+        access_token: string;
+        refresh_token: string;
+      };
 
-    const authResponse = await this.oauthClient.refresh();
-    const newTokens = authResponse.getJson() as {
-      access_token: string;
-      refresh_token: string;
-      expires_in: number;
-    };
-
-    console.log('new tokeeeens', newTokens);
-
-    // save new tokens to DB immediately
-    await this.saveToken(newTokens.access_token, newTokens.refresh_token);
-
-    return newTokens.access_token;
+      await this.saveToken(newTokens.access_token, newTokens.refresh_token);
+      return newTokens.access_token;
+    } catch (error) {
+      // refresh token is dead — user must reauthorize
+      throw new Error(
+        'QuickBooks session expired. Please reauthorize at /quickbooks/connect',
+      );
+    }
   }
 }

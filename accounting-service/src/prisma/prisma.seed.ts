@@ -21,6 +21,10 @@ async function main() {
     skipDuplicates: true,
   });
 
+  await prisma.paymentMethod.createMany({
+    data: [{ name: 'Cash' }, { name: 'Card' }, { name: 'Bank Transfer' }],
+  });
+
   console.log('Seeded successfully');
 }
 

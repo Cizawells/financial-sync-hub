@@ -39,6 +39,10 @@ export class CreateCustomerDto {
   @IsString()
   billing_address?: string;
 
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
   @IsString()
   @IsOptional()
   shipping_address?: string;

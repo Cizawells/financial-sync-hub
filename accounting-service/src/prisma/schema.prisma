@@ -30,6 +30,7 @@ model Customer {
   tax_exempt Boolean?
   balance Decimal? @db.Decimal(10, 2)
   qb_sync_token String?
+sync_status SYNCSTATUS @default(NOTSYNCED)
   active Boolean @default(true)
   deleted_at DateTime?
   created_at DateTime?
@@ -39,6 +40,7 @@ model Customer {
   @@map("customers")
 
   invoices Invoice[]
+  payments Payment[]
 }
 
 model Product {
@@ -56,6 +58,7 @@ model Product {
   taxable     Boolean  @default(true)
   qb_id         String?  @unique
   qb_sync_token String?
+  sync_status SYNCSTATUS @default(NOTSYNCED)
   active      Boolean   @default(true)
   deleted_at  DateTime?
   created_at  DateTime  @default(now())
@@ -100,15 +103,57 @@ model Invoice {
   tax_amount  Decimal? @db.Decimal(10, 2) 
   discount  Int?
   currency  String?
-  sync_status SYNCSTATUS?
+   sync_status SYNCSTATUS @default(NOTSYNCED)
 
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
 
   customer   Customer   @relation(fields: [customer_id], references: [id])
   invoice_items InvoiceItem[] 
+  payments Payment[]
 
   @@map("invoices")
+}
+
+model Payment {
+  id                String   @id @default(uuid())
+  invoice_id        String
+  customer_id       String
+  payment_method_id String?
+  amount            Decimal  @db.Decimal(10, 2)
+  payment_date      DateTime
+  reference_number  String?  // check number, transaction id etc
+  notes             String?
+  qb_id             String?  @unique
+  qb_sync_token     String?
+  status            PaymentStatus @default(COMPLETED)  // ← add this
+  sync_status       SYNCSTATUS @default(NOTSYNCED)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  invoice        Invoice       @relation(fields: [invoice_id], references: [id])
+  customer       Customer      @relation(fields: [customer_id], references: [id])
+  payment_method PaymentMethod? @relation(fields: [payment_method_id], references: [id])
+
+  @@unique([created_at, id])
+
+  @@map("payments")
+}
+
+model PaymentMethod {
+  id    String @id @default(uuid())
+  name  String // "Cash", "Card", "Bank Transfer", "Check"
+  qb_id String? // QB has its own payment methods
+
+  payments Payment[]
+
+  @@map("payment_methods")
+}
+
+enum PaymentStatus {
+  COMPLETED   // successfully processed
+  CANCELLED   // payment cancelled
+  REFUNDED    // payment refunded
 }
 
 enum InvoiceStatus {

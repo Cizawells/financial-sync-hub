@@ -53,11 +53,10 @@ export class ProductSyncProcessor extends WorkerHost {
       // 3. Push to QuickBooks
       const { Id, SyncToken } =
         await this.qbProductService.createProduct(product);
-      console.log('yeeeesssss', { Id, SyncToken });
       // 4. Save QB id back to product record
       await this.prisma.product.update({
         where: { id: productId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success
@@ -80,10 +79,15 @@ export class ProductSyncProcessor extends WorkerHost {
         },
       });
 
+      await this.prisma.product.update({
+        where: { id: productId },
+        data: { sync_status: 'FAILED' },
+      });
+
       this.logger.error(
-        `❌ Sync failed for product ${productId}: ${error.message}`,
+        `Sync failed for product ${productId}: ${error.message}`,
       );
-      throw error; // rethrow → BullMQ triggers retry
+      throw error;
     }
   }
 
@@ -114,7 +118,7 @@ export class ProductSyncProcessor extends WorkerHost {
       // 4. Save QB synctoken back to product record
       await this.prisma.product.update({
         where: { id: productId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success
@@ -137,10 +141,15 @@ export class ProductSyncProcessor extends WorkerHost {
         },
       });
 
+      await this.prisma.product.update({
+        where: { id: productId },
+        data: { sync_status: 'SYNCED' },
+      });
+
       this.logger.error(
-        `❌ Sync failed for product ${productId}: ${error.message}`,
+        ` Sync failed for product ${productId}: ${error.message}`,
       );
-      throw error; // rethrow → BullMQ triggers retry
+      throw error;
     }
   }
   //reactivate
@@ -170,7 +179,7 @@ export class ProductSyncProcessor extends WorkerHost {
       // 4. Save QB synctoken back to product record
       await this.prisma.product.update({
         where: { id: productId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success
@@ -192,11 +201,15 @@ export class ProductSyncProcessor extends WorkerHost {
           attempts: job.attemptsMade,
         },
       });
+      await this.prisma.product.update({
+        where: { id: productId },
+        data: { sync_status: 'FAILED' },
+      });
 
       this.logger.error(
-        `❌ Sync failed for product ${productId}: ${error.message}`,
+        `Sync failed for product ${productId}: ${error.message}`,
       );
-      throw error; // rethrow → BullMQ triggers retry
+      throw error;
     }
   }
 
@@ -226,7 +239,7 @@ export class ProductSyncProcessor extends WorkerHost {
       // 4. Save QB synctoken back to product record
       await this.prisma.product.update({
         where: { id: productId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success
@@ -249,10 +262,15 @@ export class ProductSyncProcessor extends WorkerHost {
         },
       });
 
+      await this.prisma.product.update({
+        where: { id: productId },
+        data: { sync_status: 'FAILED' },
+      });
+
       this.logger.error(
-        `❌ Sync failed for product ${productId}: ${error.message}`,
+        `Sync failed for product ${productId}: ${error.message}`,
       );
-      throw error; // rethrow → BullMQ triggers retry
+      throw error;
     }
   }
 }

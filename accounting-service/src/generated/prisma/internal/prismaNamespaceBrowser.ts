@@ -55,6 +55,8 @@ export const ModelName = {
   Product: 'Product',
   InvoiceItem: 'InvoiceItem',
   Invoice: 'Invoice',
+  Payment: 'Payment',
+  PaymentMethod: 'PaymentMethod',
   SyncLog: 'SyncLog',
   QbToken: 'QbToken'
 } as const
@@ -92,6 +94,7 @@ export const CustomerScalarFieldEnum = {
   tax_exempt: 'tax_exempt',
   balance: 'balance',
   qb_sync_token: 'qb_sync_token',
+  sync_status: 'sync_status',
   active: 'active',
   deleted_at: 'deleted_at',
   created_at: 'created_at',
@@ -115,6 +118,7 @@ export const ProductScalarFieldEnum = {
   taxable: 'taxable',
   qb_id: 'qb_id',
   qb_sync_token: 'qb_sync_token',
+  sync_status: 'sync_status',
   active: 'active',
   deleted_at: 'deleted_at',
   created_at: 'created_at',
@@ -159,6 +163,35 @@ export const InvoiceScalarFieldEnum = {
 } as const
 
 export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  invoice_id: 'invoice_id',
+  customer_id: 'customer_id',
+  payment_method_id: 'payment_method_id',
+  amount: 'amount',
+  payment_date: 'payment_date',
+  reference_number: 'reference_number',
+  notes: 'notes',
+  qb_id: 'qb_id',
+  qb_sync_token: 'qb_sync_token',
+  status: 'status',
+  sync_status: 'sync_status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const PaymentMethodScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  qb_id: 'qb_id'
+} as const
+
+export type PaymentMethodScalarFieldEnum = (typeof PaymentMethodScalarFieldEnum)[keyof typeof PaymentMethodScalarFieldEnum]
 
 
 export const SyncLogScalarFieldEnum = {

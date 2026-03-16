@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const PaymentStatus = {
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
 export const InvoiceStatus = {
   DRAFT: 'DRAFT',
   SENT: 'SENT',

@@ -51,6 +51,7 @@ export type CustomerMinAggregateOutputType = {
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
   qb_sync_token: string | null
+  sync_status: $Enums.SYNCSTATUS | null
   active: boolean | null
   deleted_at: Date | null
   created_at: Date | null
@@ -74,6 +75,7 @@ export type CustomerMaxAggregateOutputType = {
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
   qb_sync_token: string | null
+  sync_status: $Enums.SYNCSTATUS | null
   active: boolean | null
   deleted_at: Date | null
   created_at: Date | null
@@ -97,6 +99,7 @@ export type CustomerCountAggregateOutputType = {
   tax_exempt: number
   balance: number
   qb_sync_token: number
+  sync_status: number
   active: number
   deleted_at: number
   created_at: number
@@ -130,6 +133,7 @@ export type CustomerMinAggregateInputType = {
   tax_exempt?: true
   balance?: true
   qb_sync_token?: true
+  sync_status?: true
   active?: true
   deleted_at?: true
   created_at?: true
@@ -153,6 +157,7 @@ export type CustomerMaxAggregateInputType = {
   tax_exempt?: true
   balance?: true
   qb_sync_token?: true
+  sync_status?: true
   active?: true
   deleted_at?: true
   created_at?: true
@@ -176,6 +181,7 @@ export type CustomerCountAggregateInputType = {
   tax_exempt?: true
   balance?: true
   qb_sync_token?: true
+  sync_status?: true
   active?: true
   deleted_at?: true
   created_at?: true
@@ -286,6 +292,7 @@ export type CustomerGroupByOutputType = {
   tax_exempt: boolean | null
   balance: runtime.Decimal | null
   qb_sync_token: string | null
+  sync_status: $Enums.SYNCSTATUS
   active: boolean
   deleted_at: Date | null
   created_at: Date | null
@@ -332,11 +339,13 @@ export type CustomerWhereInput = {
   tax_exempt?: Prisma.BoolNullableFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.StringNullableFilter<"Customer"> | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Customer"> | $Enums.SYNCSTATUS
   active?: Prisma.BoolFilter<"Customer"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   invoices?: Prisma.InvoiceListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -356,11 +365,13 @@ export type CustomerOrderByWithRelationInput = {
   tax_exempt?: Prisma.SortOrderInput | Prisma.SortOrder
   balance?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -384,11 +395,13 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   tax_exempt?: Prisma.BoolNullableFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.StringNullableFilter<"Customer"> | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Customer"> | $Enums.SYNCSTATUS
   active?: Prisma.BoolFilter<"Customer"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
   invoices?: Prisma.InvoiceListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "email" | "created_at_id">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -408,6 +421,7 @@ export type CustomerOrderByWithAggregationInput = {
   tax_exempt?: Prisma.SortOrderInput | Prisma.SortOrder
   balance?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -439,6 +453,7 @@ export type CustomerScalarWhereWithAggregatesInput = {
   tax_exempt?: Prisma.BoolNullableWithAggregatesFilter<"Customer"> | boolean | null
   balance?: Prisma.DecimalNullableWithAggregatesFilter<"Customer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSWithAggregatesFilter<"Customer"> | $Enums.SYNCSTATUS
   active?: Prisma.BoolWithAggregatesFilter<"Customer"> | boolean
   deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
@@ -462,11 +477,13 @@ export type CustomerCreateInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -486,11 +503,13 @@ export type CustomerUncheckedCreateInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -510,11 +529,13 @@ export type CustomerUpdateInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -534,11 +555,13 @@ export type CustomerUncheckedUpdateInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -558,6 +581,7 @@ export type CustomerCreateManyInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string | null
@@ -581,6 +605,7 @@ export type CustomerUpdateManyMutationInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -604,6 +629,7 @@ export type CustomerUncheckedUpdateManyInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -632,6 +658,7 @@ export type CustomerCountOrderByAggregateInput = {
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -659,6 +686,7 @@ export type CustomerMaxOrderByAggregateInput = {
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -682,6 +710,7 @@ export type CustomerMinOrderByAggregateInput = {
   tax_exempt?: Prisma.SortOrder
   balance?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -717,6 +746,10 @@ export type NullableDecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumSYNCSTATUSFieldUpdateOperationsInput = {
+  set?: $Enums.SYNCSTATUS
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
@@ -739,6 +772,20 @@ export type CustomerUpdateOneRequiredWithoutInvoicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutInvoicesInput, Prisma.CustomerUpdateWithoutInvoicesInput>, Prisma.CustomerUncheckedUpdateWithoutInvoicesInput>
 }
 
+export type CustomerCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutPaymentsInput, Prisma.CustomerUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutPaymentsInput, Prisma.CustomerUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.CustomerUpsertWithoutPaymentsInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutPaymentsInput, Prisma.CustomerUpdateWithoutPaymentsInput>, Prisma.CustomerUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type CustomerCreateWithoutInvoicesInput = {
   id?: string
   first_name: string
@@ -756,10 +803,12 @@ export type CustomerCreateWithoutInvoicesInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
+  payments?: Prisma.PaymentCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutInvoicesInput = {
@@ -779,10 +828,12 @@ export type CustomerUncheckedCreateWithoutInvoicesInput = {
   tax_exempt?: boolean | null
   balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutInvoicesInput = {
@@ -818,10 +869,12 @@ export type CustomerUpdateWithoutInvoicesInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  payments?: Prisma.PaymentUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutInvoicesInput = {
@@ -841,10 +894,128 @@ export type CustomerUncheckedUpdateWithoutInvoicesInput = {
   tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerCreateWithoutPaymentsInput = {
+  id?: string
+  first_name: string
+  last_name: string
+  email?: string | null
+  address?: string | null
+  currency?: string | null
+  payment_terms?: string | null
+  qb_id?: string | null
+  billing_address?: string | null
+  shipping_address?: string | null
+  city?: string | null
+  country?: string | null
+  phone?: string | null
+  tax_exempt?: boolean | null
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
+  active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  first_name: string
+  last_name: string
+  email?: string | null
+  address?: string | null
+  currency?: string | null
+  payment_terms?: string | null
+  qb_id?: string | null
+  billing_address?: string | null
+  shipping_address?: string | null
+  city?: string | null
+  country?: string | null
+  phone?: string | null
+  tax_exempt?: boolean | null
+  balance?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
+  active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutPaymentsInput, Prisma.CustomerUncheckedCreateWithoutPaymentsInput>
+}
+
+export type CustomerUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutPaymentsInput, Prisma.CustomerUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutPaymentsInput, Prisma.CustomerUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutPaymentsInput, Prisma.CustomerUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type CustomerUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment_terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billing_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipping_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.StringFieldUpdateOperationsInput | string
+  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payment_terms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billing_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipping_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tax_exempt?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  balance?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 
@@ -854,10 +1025,12 @@ export type CustomerUncheckedUpdateWithoutInvoicesInput = {
 
 export type CustomerCountOutputType = {
   invoices: number
+  payments: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoices?: boolean | CustomerCountOutputTypeCountInvoicesArgs
+  payments?: boolean | CustomerCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -875,6 +1048,13 @@ export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
  */
 export type CustomerCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InvoiceWhereInput
+}
+
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
 }
 
 
@@ -895,11 +1075,13 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
   invoices?: boolean | Prisma.Customer$invoicesArgs<ExtArgs>
+  payments?: boolean | Prisma.Customer$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -920,6 +1102,7 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -943,6 +1126,7 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -966,15 +1150,17 @@ export type CustomerSelectScalar = {
   tax_exempt?: boolean
   balance?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "address" | "currency" | "payment_terms" | "qb_id" | "billing_address" | "shipping_address" | "city" | "country" | "phone" | "tax_exempt" | "balance" | "qb_sync_token" | "active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "address" | "currency" | "payment_terms" | "qb_id" | "billing_address" | "shipping_address" | "city" | "country" | "phone" | "tax_exempt" | "balance" | "qb_sync_token" | "sync_status" | "active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoices?: boolean | Prisma.Customer$invoicesArgs<ExtArgs>
+  payments?: boolean | Prisma.Customer$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -984,6 +1170,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Customer"
   objects: {
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1002,6 +1189,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     tax_exempt: boolean | null
     balance: runtime.Decimal | null
     qb_sync_token: string | null
+    sync_status: $Enums.SYNCSTATUS
     active: boolean
     deleted_at: Date | null
     created_at: Date | null
@@ -1401,6 +1589,7 @@ readonly fields: CustomerFieldRefs;
 export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   invoices<T extends Prisma.Customer$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.Customer$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1446,6 +1635,7 @@ export interface CustomerFieldRefs {
   readonly tax_exempt: Prisma.FieldRef<"Customer", 'Boolean'>
   readonly balance: Prisma.FieldRef<"Customer", 'Decimal'>
   readonly qb_sync_token: Prisma.FieldRef<"Customer", 'String'>
+  readonly sync_status: Prisma.FieldRef<"Customer", 'SYNCSTATUS'>
   readonly active: Prisma.FieldRef<"Customer", 'Boolean'>
   readonly deleted_at: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Customer", 'DateTime'>
@@ -1859,6 +2049,30 @@ export type Customer$invoicesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
+}
+
+/**
+ * Customer.payments
+ */
+export type Customer$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

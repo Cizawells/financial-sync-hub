@@ -60,6 +60,16 @@ export type InvoiceItem = Prisma.InvoiceItemModel
  */
 export type Invoice = Prisma.InvoiceModel
 /**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model PaymentMethod
+ * 
+ */
+export type PaymentMethod = Prisma.PaymentMethodModel
+/**
  * Model SyncLog
  * 
  */

@@ -12,6 +12,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { ProductModule } from './product/product.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { InvoiceModule } from './invoice/invoice.module.js';
+import { PaymentModule } from './payment/payment.module.js';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { InvoiceModule } from './invoice/invoice.module.js';
     ProductModule,
     PrismaModule,
     InvoiceModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

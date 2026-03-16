@@ -6,7 +6,6 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { buildProductOrderBy } from './product.sort.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { ProductUpdatedEvent } from './events/product-updated.event.js';
-import { ProductDeletedEvent } from './events/product-deleted.event.js';
 import { ProductMapper } from './mappers/product-mapper.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
 import { ProductCreatedEvent } from './events/product-created.event.js';

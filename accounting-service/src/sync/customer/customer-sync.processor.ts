@@ -51,11 +51,11 @@ export class CustomerSyncProcessor extends WorkerHost {
       // 3. Push to QuickBooks
       const { Id, SyncToken } =
         await this.qbCustomerService.createCustomer(customer);
-
+      console.log('sucess sync');
       // 4. Save QB id back to customer record
       await this.prisma.customer.update({
         where: { id: customerId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success
@@ -108,11 +108,11 @@ export class CustomerSyncProcessor extends WorkerHost {
       // 3. Push to QuickBooks
       const { Id, SyncToken } =
         await this.qbCustomerService.updateCustomer(customer);
-
+      console.log('sucess sync');
       // 4. Save QB synctoken back to customer record
       await this.prisma.customer.update({
         where: { id: customerId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success
@@ -165,11 +165,11 @@ export class CustomerSyncProcessor extends WorkerHost {
       // 3. Push to QuickBooks
       const { Id, SyncToken } =
         await this.qbCustomerService.deleteCustomer(customer);
-
+      console.log('sucess sync delete');
       // 4. Save QB synctoken back to customer record
       await this.prisma.customer.update({
         where: { id: customerId },
-        data: { qb_id: Id, qb_sync_token: SyncToken },
+        data: { qb_id: Id, qb_sync_token: SyncToken, sync_status: 'SYNCED' },
       });
 
       // 5. Mark log success

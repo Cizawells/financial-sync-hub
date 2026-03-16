@@ -54,6 +54,7 @@ export type ProductMinAggregateOutputType = {
   taxable: boolean | null
   qb_id: string | null
   qb_sync_token: string | null
+  sync_status: $Enums.SYNCSTATUS | null
   active: boolean | null
   deleted_at: Date | null
   created_at: Date | null
@@ -74,6 +75,7 @@ export type ProductMaxAggregateOutputType = {
   taxable: boolean | null
   qb_id: string | null
   qb_sync_token: string | null
+  sync_status: $Enums.SYNCSTATUS | null
   active: boolean | null
   deleted_at: Date | null
   created_at: Date | null
@@ -94,6 +96,7 @@ export type ProductCountAggregateOutputType = {
   taxable: number
   qb_id: number
   qb_sync_token: number
+  sync_status: number
   active: number
   deleted_at: number
   created_at: number
@@ -130,6 +133,7 @@ export type ProductMinAggregateInputType = {
   taxable?: true
   qb_id?: true
   qb_sync_token?: true
+  sync_status?: true
   active?: true
   deleted_at?: true
   created_at?: true
@@ -150,6 +154,7 @@ export type ProductMaxAggregateInputType = {
   taxable?: true
   qb_id?: true
   qb_sync_token?: true
+  sync_status?: true
   active?: true
   deleted_at?: true
   created_at?: true
@@ -170,6 +175,7 @@ export type ProductCountAggregateInputType = {
   taxable?: true
   qb_id?: true
   qb_sync_token?: true
+  sync_status?: true
   active?: true
   deleted_at?: true
   created_at?: true
@@ -277,6 +283,7 @@ export type ProductGroupByOutputType = {
   taxable: boolean
   qb_id: string | null
   qb_sync_token: string | null
+  sync_status: $Enums.SYNCSTATUS
   active: boolean
   deleted_at: Date | null
   created_at: Date
@@ -320,6 +327,7 @@ export type ProductWhereInput = {
   taxable?: Prisma.BoolFilter<"Product"> | boolean
   qb_id?: Prisma.StringNullableFilter<"Product"> | string | null
   qb_sync_token?: Prisma.StringNullableFilter<"Product"> | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Product"> | $Enums.SYNCSTATUS
   active?: Prisma.BoolFilter<"Product"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -341,6 +349,7 @@ export type ProductOrderByWithRelationInput = {
   taxable?: Prisma.SortOrder
   qb_id?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -366,6 +375,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   reorder_point?: Prisma.IntNullableFilter<"Product"> | number | null
   taxable?: Prisma.BoolFilter<"Product"> | boolean
   qb_sync_token?: Prisma.StringNullableFilter<"Product"> | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFilter<"Product"> | $Enums.SYNCSTATUS
   active?: Prisma.BoolFilter<"Product"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -387,6 +397,7 @@ export type ProductOrderByWithAggregationInput = {
   taxable?: Prisma.SortOrder
   qb_id?: Prisma.SortOrderInput | Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrderInput | Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -415,6 +426,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   taxable?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   qb_id?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   qb_sync_token?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSWithAggregatesFilter<"Product"> | $Enums.SYNCSTATUS
   active?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -435,6 +447,7 @@ export type ProductCreateInput = {
   taxable?: boolean
   qb_id?: string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -456,6 +469,7 @@ export type ProductUncheckedCreateInput = {
   taxable?: boolean
   qb_id?: string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -477,6 +491,7 @@ export type ProductUpdateInput = {
   taxable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -498,6 +513,7 @@ export type ProductUncheckedUpdateInput = {
   taxable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -519,6 +535,7 @@ export type ProductCreateManyInput = {
   taxable?: boolean
   qb_id?: string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -539,6 +556,7 @@ export type ProductUpdateManyMutationInput = {
   taxable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -559,6 +577,7 @@ export type ProductUncheckedUpdateManyInput = {
   taxable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +603,7 @@ export type ProductCountOrderByAggregateInput = {
   taxable?: Prisma.SortOrder
   qb_id?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -611,6 +631,7 @@ export type ProductMaxOrderByAggregateInput = {
   taxable?: Prisma.SortOrder
   qb_id?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -631,6 +652,7 @@ export type ProductMinOrderByAggregateInput = {
   taxable?: Prisma.SortOrder
   qb_id?: Prisma.SortOrder
   qb_sync_token?: Prisma.SortOrder
+  sync_status?: Prisma.SortOrder
   active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -709,6 +731,7 @@ export type ProductCreateWithoutInvoice_itemsInput = {
   taxable?: boolean
   qb_id?: string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -729,6 +752,7 @@ export type ProductUncheckedCreateWithoutInvoice_itemsInput = {
   taxable?: boolean
   qb_id?: string | null
   qb_sync_token?: string | null
+  sync_status?: $Enums.SYNCSTATUS
   active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -765,6 +789,7 @@ export type ProductUpdateWithoutInvoice_itemsInput = {
   taxable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -785,6 +810,7 @@ export type ProductUncheckedUpdateWithoutInvoice_itemsInput = {
   taxable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qb_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qb_sync_token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sync_status?: Prisma.EnumSYNCSTATUSFieldUpdateOperationsInput | $Enums.SYNCSTATUS
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -836,6 +862,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   taxable?: boolean
   qb_id?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -858,6 +885,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   taxable?: boolean
   qb_id?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -878,6 +906,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   taxable?: boolean
   qb_id?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -898,13 +927,14 @@ export type ProductSelectScalar = {
   taxable?: boolean
   qb_id?: boolean
   qb_sync_token?: boolean
+  sync_status?: boolean
   active?: boolean
   deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "sku" | "type" | "unit_price" | "cost" | "quantity_on_hand" | "inventory_start_date" | "reorder_point" | "taxable" | "qb_id" | "qb_sync_token" | "active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "sku" | "type" | "unit_price" | "cost" | "quantity_on_hand" | "inventory_start_date" | "reorder_point" | "taxable" | "qb_id" | "qb_sync_token" | "sync_status" | "active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoice_items?: boolean | Prisma.Product$invoice_itemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -931,6 +961,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     taxable: boolean
     qb_id: string | null
     qb_sync_token: string | null
+    sync_status: $Enums.SYNCSTATUS
     active: boolean
     deleted_at: Date | null
     created_at: Date
@@ -1372,6 +1403,7 @@ export interface ProductFieldRefs {
   readonly taxable: Prisma.FieldRef<"Product", 'Boolean'>
   readonly qb_id: Prisma.FieldRef<"Product", 'String'>
   readonly qb_sync_token: Prisma.FieldRef<"Product", 'String'>
+  readonly sync_status: Prisma.FieldRef<"Product", 'SYNCSTATUS'>
   readonly active: Prisma.FieldRef<"Product", 'Boolean'>
   readonly deleted_at: Prisma.FieldRef<"Product", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Product", 'DateTime'>

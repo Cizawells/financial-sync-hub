@@ -2,67 +2,140 @@ import { Injectable } from '@nestjs/common';
 import { Customer } from '../../generated/prisma/client.js';
 import { QBCustomerMapper } from '../mappers/customer.mapper.js';
 import { QuickBooksService } from '../quickbooks.service.js';
+import { QuickBooksAuthService } from '../quickbooks-auth.service.js';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class QBCustomerService {
-  constructor(private client: QuickBooksService) {}
+  constructor(
+    private client: QuickBooksService,
+    private authService: QuickBooksAuthService,
+    private config: ConfigService,
+  ) {}
 
-  async createCustomer(customer: any): Promise<{
+  async createCustomer(customer: Customer): Promise<{
     Id: string;
     SyncToken: string;
   }> {
+    const accessToken = await this.authService.getValidAccessToken();
+    const realmId = this.config.get<string>('QB_REALM_ID');
+    const baseUrl = this.config.get<string>('QB_BASE_URL');
+
     const payload = QBCustomerMapper.toQuickBooks(customer);
-    return new Promise((resolve, reject) => {
-      let qb = this.client.getQBClient();
-      qb.createCustomer(payload, (err, result) => {
-        if (err) return reject(err);
-        resolve({
-          Id: result.Id,
-          SyncToken: result.SyncToken,
-        }); // QB's ID for this customer
-      });
-    });
+    console.log('payloadd customer', payload);
+    const response = await fetch(
+      `${baseUrl}/v3/company/${realmId}/customer?minorversion=75`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      },
+    );
+
+    if (!response.ok) {
+      const error = (await response.json()) as {
+        message: string;
+      };
+      throw new Error(
+        `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
+      );
+    }
+
+    const data = (await response.json()) as {
+      Customer: { Id: string; SyncToken: string };
+    };
+    return {
+      Id: data.Customer.Id,
+      SyncToken: data.Customer.SyncToken,
+    };
   }
-  async updateCustomer(customer: any): Promise<{
+  async updateCustomer(customer: Customer): Promise<{
     Id: string;
     SyncToken: string;
   }> {
-    let qb = this.client.getQBClient();
-    console.log('qbookssss', qb);
+    const accessToken = await this.authService.getValidAccessToken();
+    const realmId = this.config.get<string>('QB_REALM_ID');
+    const baseUrl = this.config.get<string>('QB_BASE_URL');
+
     const payload = QBCustomerMapper.toQuickBooks(customer);
-    return new Promise((resolve, reject) => {
-      qb.updateCustomer(payload, (err, result) => {
-        if (err) return reject(err);
-        resolve({
-          Id: result.Id,
-          SyncToken: result.SyncToken,
-        }); // QB's ID for this customer
-      });
-    });
+    console.log('payloaddd', payload);
+    const response = await fetch(
+      `${baseUrl}/v3/company/${realmId}/customer?minorversion=75`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      },
+    );
+
+    if (!response.ok) {
+      const error = (await response.json()) as {
+        message: string;
+      };
+      throw new Error(
+        `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
+      );
+    }
+
+    const data = (await response.json()) as {
+      Customer: { Id: string; SyncToken: string };
+    };
+    return {
+      Id: data.Customer.Id,
+      SyncToken: data.Customer.SyncToken,
+    };
   }
   async deleteCustomer(customer: Customer): Promise<{
     Id: string;
     SyncToken: string;
   }> {
-    // if (!customer.qb_sync_token) return;
-    let qb = this.client.getQBClient();
-    // const payload = QBCustomerMapper.toQuickBooks(customer);
-    return new Promise((resolve, reject) => {
-      qb.updateCustomer(
-        {
-          Id: customer.qb_id,
-          SyncToken: customer.qb_sync_token,
+    const accessToken = await this.authService.getValidAccessToken();
+    const realmId = this.config.get<string>('QB_REALM_ID');
+    const baseUrl = this.config.get<string>('QB_BASE_URL');
+
+    const payload = QBCustomerMapper.toQuickBooks(customer);
+    console.log('delete payloaddd', payload);
+    const response = await fetch(
+      `${baseUrl}/v3/company/${realmId}/customer?minorversion=75`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          Id: payload.Id,
+          SyncToken: payload.SyncToken,
           Active: false,
-        },
-        (err, result) => {
-          console.log('deleted result', result);
-          if (err) return reject(err);
-          resolve({
-            Id: result.Id,
-            SyncToken: result.SyncToken,
-          }); // QB's ID for this customer
-        },
+          sparse: true,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      const error = (await response.json()) as {
+        message: string;
+      };
+      throw new Error(
+        `QuickBooks API error: ${response.status} - ${JSON.stringify(error)}`,
       );
-    });
+    }
+
+    const data = (await response.json()) as {
+      Customer: { Id: string; SyncToken: string };
+    };
+    return {
+      Id: data.Customer.Id,
+      SyncToken: data.Customer.SyncToken,
+    };
   }
 }
