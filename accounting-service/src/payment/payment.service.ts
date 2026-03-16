@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PaginationDto } from '../pagination/dto/pagination.dto.js';
 import { buildProductOrderBy } from '../product/product.sort.js';
 import { PrismaService } from '../prisma/prisma.service.js';
@@ -84,6 +88,26 @@ export class PaymentService {
     return PaymentMapper.toResponseDto(payment);
   }
   async create(data: CreatePaymentDto): Promise<PaymentResponseDto> {
+    if (data.payment_type === 'INVOICE') {
+      // verify invoice exists and belongs to customer
+      const invoice = await this.prismaService.invoice.findUniqueOrThrow({
+        where: { id: data.invoice_id },
+      });
+
+      if (invoice.customer_id !== data.customer_id) {
+        throw new BadRequestException(
+          'Invoice does not belong to this customer',
+        );
+      }
+
+      if (invoice.status === 'PAID') {
+        throw new BadRequestException('Invoice is already paid');
+      }
+
+      if (data.amount > invoice.total_amount.toNumber()) {
+        throw new BadRequestException('Payment exceeds invoice total');
+      }
+    }
     const payment = await this.prismaService.payment.create({
       data,
     });

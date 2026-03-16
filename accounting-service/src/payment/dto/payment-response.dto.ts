@@ -1,6 +1,6 @@
 export class PaymentResponseDto {
   id: string;
-  invoice_id: string;
+  invoice_id?: string;
   customer_id: string;
   payment_method_id?: string;
   amount: number;

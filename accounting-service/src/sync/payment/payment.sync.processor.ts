@@ -52,6 +52,7 @@ export class PaymentSyncProcessor extends WorkerHost {
         include: {
           payment_method: true,
           customer: true,
+          invoice: true,
         },
       });
 

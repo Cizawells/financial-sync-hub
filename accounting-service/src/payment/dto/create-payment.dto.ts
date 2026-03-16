@@ -4,16 +4,24 @@ import {
   IsOptional,
   IsDate,
   IsUUID,
+  IsEnum,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PaymentType } from '../../generated/prisma/enums.js';
 
 export class CreatePaymentDto {
-  @IsUUID()
-  invoice_id: string;
+  @IsEnum(PaymentType)
+  payment_type: PaymentType;
 
   @IsUUID()
   customer_id: string;
+
+  // only required when payment_type is INVOICE
+  @ValidateIf((o: CreatePaymentDto) => o.payment_type === PaymentType.INVOICE)
+  @IsUUID()
+  invoice_id?: string;
 
   @IsOptional()
   @IsUUID()
@@ -21,7 +29,7 @@ export class CreatePaymentDto {
 
   @Type(() => Number)
   @IsNumber()
-  @Min(0.01) // payment must be at least 1 cent
+  @Min(0.01)
   amount: number;
 
   @Type(() => Date)
@@ -30,7 +38,7 @@ export class CreatePaymentDto {
 
   @IsOptional()
   @IsString()
-  reference_number?: string; // check number, transaction id, etc
+  reference_number?: string;
 
   @IsOptional()
   @IsString()

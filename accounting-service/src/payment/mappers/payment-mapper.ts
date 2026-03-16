@@ -9,7 +9,7 @@ export class PaymentMapper {
       amount: payment.amount.toNumber(),
       created_at: payment.created_at,
       customer_id: payment.customer_id,
-      invoice_id: payment.invoice_id,
+      invoice_id: payment.invoice_id ?? undefined,
       payment_date: payment.payment_date,
       sync_status: payment.sync_status,
       updated_at: payment.updated_at,

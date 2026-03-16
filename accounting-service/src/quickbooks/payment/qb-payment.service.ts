@@ -18,6 +18,7 @@ type PaymentWithRelations = Prisma.PaymentGetPayload<{
   include: {
     payment_method: true;
     customer: true;
+    invoice?: true;
   };
 }>;
 

@@ -117,7 +117,7 @@ model Invoice {
 
 model Payment {
   id                String   @id @default(uuid())
-  invoice_id        String
+  invoice_id        String?
   customer_id       String
   payment_method_id String?
   amount            Decimal  @db.Decimal(10, 2)
@@ -131,9 +131,10 @@ model Payment {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 
-  invoice        Invoice       @relation(fields: [invoice_id], references: [id])
+  invoice        Invoice?       @relation(fields: [invoice_id], references: [id])
   customer       Customer      @relation(fields: [customer_id], references: [id])
   payment_method PaymentMethod? @relation(fields: [payment_method_id], references: [id])
+   payment_type  PaymentType @default(INVOICE)
 
   @@unique([created_at, id])
 
@@ -148,6 +149,11 @@ model PaymentMethod {
   payments Payment[]
 
   @@map("payment_methods")
+}
+
+enum PaymentType {
+  INVOICE
+  CUSTOMER
 }
 
 enum PaymentStatus {
